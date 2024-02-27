@@ -15,14 +15,16 @@ int main(void)
 	initPWM();
 	
 	while(1) {
-		move(3700);
-		delay(100);
-		stopMotor();
-		delay(1000);
-		turnLeft(3750);
-		delay(1000);
-		turnRight(3750);
-		delay(1000);
+		//move(3700);
+		//delay(1000);
+    reverse(3750);
+//		delay(000);
+//		stopMotor();
+//		delay(1000);
+//		turnLeft(3750);
+//		delay(1000);
+//		turnRight(3750);
+//		delay(1000);
 	}
 	
 }
