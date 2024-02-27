@@ -10,6 +10,8 @@ static void delay(uint32_t milliseconds) {
 	}
 }
 
+struct AxisValues axisValues;
+
 int main(void)
 {
 	SystemCoreClockUpdate();
@@ -17,34 +19,53 @@ int main(void)
 	initUART2(BAUD_RATE);
 	
 	while(1) {
-		struct AxisValues axisValues = extractAxisValues();
-		
-		switch(axisValues.y_axis) {
-			case 1:
-				reverse(3750);
-			break;
-			case 2:
-				reverse(1600);
-			break;
-			case 3:
-				reverse(800);
-			break;
-			case 4:
+		axisValues = extractAxisValues();
+		switch(axisValues.x_axis) {
+			case 0x01:
+				goRight(3750);
+				break;
+			case 0x02:
+				goRight(1600);
+				break;
+			case 0x03:
+				goRight(800);
+				break;
+			case 0x04: 
 				stopMotor();
-			break;
-			case 5:
-				move(800);
-			break;
-			case 6:
-				move(1600);
-			break;
-			case 7:
-				move(3750);
-			break;
-												
+				break;
+			case 0x05:
+				goLeft(800);
+				break;
+			case 0x06:
+				goLeft(1600);
+				break;
+			case 0x07:
+				goLeft(3750);
+				break;								
 		}
-		
-		move(axisValues.y_axis);
+		switch(axisValues.y_axis) {
+			case 0x01:
+				reverse(3750);
+				break;
+			case 0x02:
+				reverse(1600);
+				break;
+			case 0x03:
+				reverse(800);
+				break;
+			case 0x04:
+				stopMotor();
+				break;
+			case 0x05:
+				move(800);
+				break;
+			case 0x06:
+				move(1600);
+				break;
+			case 0x07:
+				move(3750);
+				break;								
+		}
 	}
 	
 }
