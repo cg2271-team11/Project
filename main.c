@@ -1,5 +1,6 @@
-#include "MKL25Z4.h"                    // Device header
+                  // Device header
 #include "motor.h"
+#include "uart.h"
 
 static void delay(uint32_t milliseconds) {
 	volatile uint32_t nof = milliseconds *4800;
@@ -13,18 +14,37 @@ int main(void)
 {
 	SystemCoreClockUpdate();
 	initPWM();
+	initUART2(BAUD_RATE);
 	
 	while(1) {
-		//move(3700);
-		//delay(1000);
-    reverse(3750);
-//		delay(000);
-//		stopMotor();
-//		delay(1000);
-//		turnLeft(3750);
-//		delay(1000);
-//		turnRight(3750);
-//		delay(1000);
+		struct AxisValues axisValues = extractAxisValues();
+		
+		switch(axisValues.y_axis) {
+			case 1:
+				reverse(3750);
+			break;
+			case 2:
+				reverse(1600);
+			break;
+			case 3:
+				reverse(800);
+			break;
+			case 4:
+				stopMotor();
+			break;
+			case 5:
+				move(800);
+			break;
+			case 6:
+				move(1600);
+			break;
+			case 7:
+				move(3750);
+			break;
+												
+		}
+		
+		move(axisValues.y_axis);
 	}
 	
 }

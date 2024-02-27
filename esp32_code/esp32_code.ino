@@ -42,10 +42,10 @@ void notify()
   }
 
   // struct: 0x(x-axis)(y-axis)
-  // 0-3: left/down
+  // 1-3: left/down
   // 4: nothing
   // 5-7: right/up
-  // 0/7 fastest mode
+  // 1/7 fastest mode
 
   int x_data = PS4.LStickX();
   int y_data = PS4.LStickY();
@@ -54,11 +54,11 @@ void notify()
   int y_output;
 
   if (x_data <= -97) {
-    x_output = 0;
-  } else if (x_data >= -96 && x_data <= -65) {
     x_output = 1;
-  } else if (x_data >= -64 && x_data <= -33) {
+  } else if (x_data >= -96 && x_data <= -65) {
     x_output = 2;
+  } else if (x_data >= -64 && x_data <= -33) {
+    x_output = 3;
   } else if (x_data >= -32 && x_data <= 32) {
     x_output = 4;
   } else if (x_data >= 33 && x_data <= 64) {
@@ -70,11 +70,11 @@ void notify()
   }
 
   if (y_data <= -97) {
-    y_output = 0;
-  } else if (y_data >= -96 && y_data <= -65) {
     y_output = 1;
-  } else if (y_data >= -64 && y_data <= -33) {
+  } else if (y_data >= -96 && y_data <= -65) {
     y_output = 2;
+  } else if (y_data >= -64 && y_data <= -33) {
+    y_output = 3;
   } else if (y_data >= -32 && y_data <= 32) {
     y_output = 4;
   } else if (y_data >= 33 && y_data <= 64) {
