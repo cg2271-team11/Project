@@ -599,7 +599,7 @@ ARM Macro Assembler    Page 10
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M0+ --dep
 end=.\objects\startup_mkl25z4.d -o.\objects\startup_mkl25z4.o -I.\RTE\Device\MK
 L25Z128xxx4 -I.\RTE\_Target_1 -IC:\Users\arifk\AppData\Local\Arm\Packs\ARM\CMSI
-S\5.9.0\CMSIS\Core\Include -IC:\Users\arifk\AppData\Local\Arm\Packs\Keil\Kineti
+S\5.6.0\CMSIS\Core\Include -IC:\Users\arifk\AppData\Local\Arm\Packs\Keil\Kineti
 s_KLxx_DFP\1.15.0\Device\Include --predefine="__EVAL SETA 1" --predefine="__MIC
 ROLIB SETA 1" --predefine="__UVISION_VERSION SETA 539" --predefine="_RTE_ SETA 
 1" --predefine="MKL25Z128xxx4 SETA 1" --predefine="_RTE_ SETA 1" --list=.\listi

@@ -82,14 +82,14 @@ void reverse(uint16_t speed) {
 }
   
 void goLeft(uint16_t speed) {
-	TPM1_C0V = speed; 	// LEFT_FRONT_W
-	//TPM1_C1V = 0; 		// LEFT_BACK_W
-	//TPM2_C0V = 0;  // RIGHT_FRONT_W
-	//TPM2_C1V = 0; 		// RIGHT_BACK_W
-}
-void goRight(uint16_t speed) {
 	//TPM1_C0V = 0; 	// LEFT_FRONT_W
 	//TPM1_C1V = 0; 		// LEFT_BACK_W
 	TPM2_C0V = speed;  // RIGHT_FRONT_W
+	//TPM2_C1V = 0; 		// RIGHT_BACK_W
+}
+void goRight(uint16_t speed) {
+	TPM1_C0V = speed; 	// LEFT_FRONT_W
+	//TPM1_C1V = 0; 		// LEFT_BACK_W
+	//TPM2_C0V = 0;  // RIGHT_FRONT_W
 	//TPM2_C1V = 0; 		// RIGHT_BACK_W
 }
