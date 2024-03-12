@@ -21,52 +21,65 @@ void tBrain(void* argument){
 	// which handles the movement
 	while(1) {
 		axisValues = extractAxisValues();
-		switch(axisValues.x_axis) {
-			case 0x01:
-				goRight(3750);
-				break;
-			case 0x02:
-				goRight(1600);
-				break;
-			case 0x03:
-				goRight(800);
-				break;
-			case 0x04: 
-				stopMotor();
-				break;
-			case 0x05:
-				goLeft(800);
-				break;
-			case 0x06:
-				goLeft(1600);
-				break;
-			case 0x07:
-				goLeft(3750);
-				break;								
-		}
+
+		uint16_t y_speed = 0;
 		switch(axisValues.y_axis) {
 			case 0x01:
-				reverse(3750);
+				y_speed = -3750;
 				break;
 			case 0x02:
-				reverse(1600);
+				y_speed = -1600;
 				break;
 			case 0x03:
-				reverse(800);
+				y_speed = -800;
 				break;
 			case 0x04:
-				stopMotor();
+				y_speed = 0;
 				break;
 			case 0x05:
-				move(800);
+				y_speed = 800;
 				break;
 			case 0x06:
-				move(1600);
+				y_speed = 1600;
 				break;
 			case 0x07:
-				move(3750);
+				y_speed = 3750;
 				break;								
 		}
+		uint16_t leftSpeed = y_speed;
+		uint16_t rightSpeed = y_speed;
+		int direction = 0;
+		if(y_speed >= 0){
+			direction = 1;
+		}else{
+			direction = -1;
+		}
+		switch(axisValues.x_axis) {
+			case 0x01:
+				// Most right
+				rightSpeed -= direction * 3750;
+				break;
+			case 0x02:
+				rightSpeed -= direction * 1600;
+				break;
+			case 0x03:
+				rightSpeed -= direction * 800;
+				break;
+			case 0x04: 
+				// Do not change status of right and left speed at all
+				break;
+			case 0x05:
+				leftSpeed -= direction * 800;
+				break;
+			case 0x06:
+				leftSpeed -= direction * 1600;
+				break;
+			case 0x07:
+				// Most left
+				leftSpeed -= direction * 3750;
+				break;								
+		}
+		moveAll(leftSpeed, rightSpeed);
 	}
 }
 

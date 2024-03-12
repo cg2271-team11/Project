@@ -14,3 +14,4 @@ void move(uint16_t speed);
 void reverse(uint16_t speed);
 void goLeft(uint16_t speed);
 void goRight(uint16_t speed);
+void moveAll(uint16_t leftSpeed, uint16_t rightSpeed);
