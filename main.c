@@ -21,6 +21,7 @@ void tBrain(void* argument){
 	// which handles the movement
 	while(1) {
 		axisValues = extractAxisValues();
+		int shouldStop = 0;
 		switch(axisValues.x_axis) {
 			case 0x01:
 				goRight(3750);
@@ -32,7 +33,7 @@ void tBrain(void* argument){
 				goRight(800);
 				break;
 			case 0x04: 
-				stopMotor();
+				shouldStop = 1;
 				break;
 			case 0x05:
 				goLeft(800);
@@ -55,7 +56,9 @@ void tBrain(void* argument){
 				reverse(800);
 				break;
 			case 0x04:
-				stopMotor();
+				if(shouldStop){
+					stopMotor();
+				}
 				break;
 			case 0x05:
 				move(800);
