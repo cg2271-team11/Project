@@ -31,24 +31,13 @@ void initUART2(uint32_t baud_rate)
 }
 
 volatile uint8_t rx_data = 0;
-// void UART2_Transmit_Poll(uint8_t data){
-// 	while(!(UART2->S1 & UART_S1_TDRE_MASK));
-// 	UART2->D = data;
-// }
+
 void UART2_IRQHandler(void){
 	NVIC_ClearPendingIRQ(UART2_IRQn);
 	if(UART2->S1 & UART_S1_RDRF_MASK){
 		rx_data = UART2->D;
 	}
 }
-
-uint8_t UART2_Receive_Poll(void){
-	while(!(UART2->S1 & UART_S1_RDRF_MASK));
-	return (UART2->D);
-}
-
-
-
 
 struct AxisValues extractAxisValues() {
     //rx_data = UART2_Receive_Poll();

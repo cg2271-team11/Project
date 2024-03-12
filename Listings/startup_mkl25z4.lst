@@ -597,13 +597,16 @@ ARM Macro Assembler    Page 10
               00000000 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M0+ --dep
-end=.\objects\startup_mkl25z4.d -o.\objects\startup_mkl25z4.o -I.\RTE\Device\MK
-L25Z128xxx4 -I.\RTE\_Target_1 -IC:\Users\arifk\AppData\Local\Arm\Packs\ARM\CMSI
-S\5.6.0\CMSIS\Core\Include -IC:\Users\arifk\AppData\Local\Arm\Packs\Keil\Kineti
-s_KLxx_DFP\1.15.0\Device\Include --predefine="__EVAL SETA 1" --predefine="__MIC
-ROLIB SETA 1" --predefine="__UVISION_VERSION SETA 539" --predefine="_RTE_ SETA 
-1" --predefine="MKL25Z128xxx4 SETA 1" --predefine="_RTE_ SETA 1" --list=.\listi
-ngs\startup_mkl25z4.lst RTE/Device/MKL25Z128xxx4/startup_MKL25Z4.s
+end=.\objects\startup_mkl25z4.d -o.\objects\startup_mkl25z4.o -I.\RTE\CMSIS -I.
+\RTE\Device\MKL25Z128xxx4 -I.\RTE\_Target_1 -IC:\Users\arifk\AppData\Local\Arm\
+Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include -IC:\Users\arifk\AppData\Local\Arm\Pac
+ks\ARM\CMSIS\5.6.0\CMSIS\RTOS2\Include -IC:\Users\arifk\AppData\Local\Arm\Packs
+\ARM\CMSIS\5.6.0\CMSIS\RTOS2\RTX\Include -IC:\Users\arifk\AppData\Local\Arm\Pac
+ks\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include --predefine="__RTX SETA 1" --pre
+define="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_V
+ERSION SETA 539" --predefine="_RTE_ SETA 1" --predefine="MKL25Z128xxx4 SETA 1" 
+--predefine="_RTE_ SETA 1" --list=.\listings\startup_mkl25z4.lst RTE/Device/MKL
+25Z128xxx4/startup_MKL25Z4.s
 
 
 
@@ -1343,4 +1346,4 @@ Symbol: __main
       At line 274 in file RTE/Device/MKL25Z128xxx4/startup_MKL25Z4.s
 Comment: __main used once
 2 symbols
-414 symbols in table
+415 symbols in table
