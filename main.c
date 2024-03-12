@@ -1,6 +1,9 @@
-                  // Device header
+// Device header
 #include "motor.h"
 #include "uart.h"
+#include "RTE_Components.h"
+#include  CMSIS_device_header
+#include "cmsis_os2.h"
 
 static void delay(uint32_t milliseconds) {
 	volatile uint32_t nof = milliseconds *4800;
@@ -10,14 +13,12 @@ static void delay(uint32_t milliseconds) {
 	}
 }
 
+// Only accessed by perform movement thread for now
+// At global to be seen in debugger
 struct AxisValues axisValues;
-
-int main(void)
-{
-	SystemCoreClockUpdate();
-	initPWM();
-	initUART2(BAUD_RATE);
-	
+void tBrain(void* argument){
+	// Should instead send some value to motor thread 
+	// which handles the movement
 	while(1) {
 		axisValues = extractAxisValues();
 		switch(axisValues.x_axis) {
@@ -67,5 +68,32 @@ int main(void)
 				break;								
 		}
 	}
+}
+
+void tMotorControl(void* argument){
 	
+}
+
+void tLED(void* argument){
+	
+}
+
+void tAudio(void* argument){
+}
+
+int main(void)
+{
+	// Initialization
+	SystemCoreClockUpdate();
+	initPWM();
+	initUART2(BAUD_RATE);
+	osKernelInitialize();                 // Initialize CMSIS-RTOS
+	
+	// Threads
+  osThreadNew(tBrain, NULL, NULL);
+	osThreadNew(tMotorControl, NULL, NULL);
+	osThreadNew(tLED, NULL, NULL);
+	osThreadNew(tAudio, NULL, NULL);
+  osKernelStart();
+
 }
