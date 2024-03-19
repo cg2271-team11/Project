@@ -15,7 +15,7 @@
     <View>
       <WinId>38003</WinId>
       <ViewName>Registers</ViewName>
-      <TableColWidths>124 100</TableColWidths>
+      <TableColWidths>124 79</TableColWidths>
     </View>
     <View>
       <WinId>346</WinId>
@@ -64,7 +64,7 @@
       <WinId>2506</WinId>
       <ViewName>Trace Data (Target Running / Processing Trace)</ViewName>
       <UserString>FiltIdx=0;DescrEn=0;DescrHeight=4;FuncTrc=1;FindType=8;ColWidths=004B00870082005F004600E600C80096</UserString>
-      <TableColWidths>75 95 70 230 200 150</TableColWidths>
+      <TableColWidths>75 135 130 95 70 230 200 150</TableColWidths>
     </View>
     <View>
       <WinId>466</WinId>
@@ -526,7 +526,7 @@
         <IsActivated>0</IsActivated>
         <MRUWidth>32767</MRUWidth>
         <PinState>0</PinState>
-        <RecentFrameAlignment>4096</RecentFrameAlignment>
+        <RecentFrameAlignment>32768</RecentFrameAlignment>
         <RecentRowIndex>0</RecentRowIndex>
         <RectRecentDocked>
           <Len>16</Len>
@@ -534,7 +534,7 @@
         </RectRecentDocked>
         <RectRecentFloat>
           <Len>16</Len>
-          <Data>22000000390000009A020000C4000000</Data>
+          <Data>3E010000DD020000B603000068030000</Data>
         </RectRecentFloat>
       </Window>
       <Window>

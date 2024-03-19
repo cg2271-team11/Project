@@ -1,7 +1,6 @@
-#include "MKL25Z4.h"
 #include "led.h"
 
-#define RED_LED 			1 // Port A Pin 1
+#define RED_LED 			4 // Port D Pin 4
 #define GREEN_LED_0 7 // Port C Pin 7
 #define GREEN_LED_1 0 // Port C Pin 0
 #define GREEN_LED_2 3 // Port C Pin 3
@@ -47,21 +46,42 @@ const int greenLEDs[] = {GREEN_LED_0, GREEN_LED_1, GREEN_LED_2, GREEN_LED_3, GRE
     // Enable counter
     PIT->CHANNEL[0].TCTRL &= ~PIT_TCTRL_TEN_MASK;
  }
+ 
+ 
+volatile int redPeriod = 0; // counts from 0-3, increments every 250ms
+ 
+int getRedPeriod(){
+	return redPeriod;
+}
+ 
+void PIT_IRQHandler(void) {
+	
+    //clear pending IRQ
+    NVIC_ClearPendingIRQ(PIT_IRQn);
+    if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK) {
+        // clear status flag for timer channel 0
+        PIT->CHANNEL[0].TFLG &= PIT_TFLG_TIF_MASK;
+        redPeriod = (redPeriod + 1) % 4;
+    }
+}
+
 
  void initLEDsGPIO(void){
     // // IO PINS
-	// Enable Clock to PORTA and PORTC
-	SIM->SCGC5 |= ((SIM_SCGC5_PORTA_MASK) | (SIM_SCGC5_PORTC_MASK));
-	// Configure MUX settings to make all 3 pins GPIO
-	PORTA->PCR[RED_LED] &= ~PORT_PCR_MUX_MASK;
-	PORTA->PCR[RED_LED] |= PORT_PCR_MUX(1);
-	for (int i = 0; i < NUM_LEDS; i++){
-         PORTC->PCR[greenLEDs[i]] &= ~PORT_PCR_MUX_MASK;
-         PORTC->PCR[greenLEDs[i]] |= PORT_PCR_MUX(1);
-     }
-	// Set Data Direction Registers for PortA and PortC
-	PTC->PDDR |= MASK(GREEN_LED);
-	PTA->PDDR |= MASK(RED_LED);
+	// Enable Clock to PORTD and PORTC
+	SIM->SCGC5 |= ((SIM_SCGC5_PORTD_MASK) | (SIM_SCGC5_PORTC_MASK));
+	
+	 // Configure MUX settings and port data directions
+	PORTD->PCR[RED_LED] &= ~PORT_PCR_MUX_MASK;
+	PORTD->PCR[RED_LED] |= PORT_PCR_MUX(1);
+	PTD->PDDR |= MASK(RED_LED);
+	
+	 for (int i = 0; i < NUM_LEDS; i++){
+     PORTC->PCR[greenLEDs[i]] &= ~PORT_PCR_MUX_MASK;
+     PORTC->PCR[greenLEDs[i]] |= PORT_PCR_MUX(1);
+		 PTC->PDDR |= MASK(greenLEDs[i]);
+   }
+	
  }
 
 void initLEDs(void){
@@ -90,7 +110,6 @@ void ledControl(color_t color, int turnOn, int position){
 				PTB->PDOR |= (unsigned int)MASK(RED_LED);
 				break;
 			case GREEN:
-
 				PTB->PDOR |= (unsigned int)MASK(greenLEDs[position]);
 				break;
 			case NONE:

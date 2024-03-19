@@ -11,10 +11,15 @@ Section Cross References
     main.o(.text.tBrain) refers to main.o(.bss.motorSpeed) for motorSpeed
     main.o(.ARM.exidx.text.tBrain) refers to main.o(.text.tBrain) for [Anonymous Symbol]
     main.o(.ARM.exidx.text.tMotorControl) refers to main.o(.text.tMotorControl) for [Anonymous Symbol]
+    main.o(.text.tLED) refers to led.o(.text.ledControl) for ledControl
+    main.o(.text.tLED) refers to rtx_delay.o(.text.osDelay) for osDelay
+    main.o(.text.tLED) refers to led.o(.text.getRedPeriod) for getRedPeriod
+    main.o(.text.tLED) refers to main.o(.bss.isMoving) for isMoving
     main.o(.ARM.exidx.text.tLED) refers to main.o(.text.tLED) for [Anonymous Symbol]
     main.o(.ARM.exidx.text.tAudio) refers to main.o(.text.tAudio) for [Anonymous Symbol]
     main.o(.text.main) refers to system_mkl25z4.o(.text.SystemCoreClockUpdate) for SystemCoreClockUpdate
     main.o(.text.main) refers to motor.o(.text.initPWM) for initPWM
+    main.o(.text.main) refers to led.o(.text.initLEDs) for initLEDs
     main.o(.text.main) refers to uart.o(.text.initUART2) for initUART2
     main.o(.text.main) refers to rtx_kernel.o(.text.osKernelInitialize) for osKernelInitialize
     main.o(.text.main) refers to rtx_thread.o(.text.osThreadNew) for osThreadNew
@@ -40,6 +45,19 @@ Section Cross References
     uart.o(.ARM.exidx.text.UART2_IRQHandler) refers to uart.o(.text.UART2_IRQHandler) for [Anonymous Symbol]
     uart.o(.text.extractAxisValues) refers to uart.o(.bss.rx_data) for rx_data
     uart.o(.ARM.exidx.text.extractAxisValues) refers to uart.o(.text.extractAxisValues) for [Anonymous Symbol]
+    led.o(.ARM.exidx.text.initPIT) refers to led.o(.text.initPIT) for [Anonymous Symbol]
+    led.o(.ARM.exidx.text.startPIT) refers to led.o(.text.startPIT) for [Anonymous Symbol]
+    led.o(.ARM.exidx.text.stopPIT) refers to led.o(.text.stopPIT) for [Anonymous Symbol]
+    led.o(.text.getRedPeriod) refers to led.o(.bss.redPeriod) for redPeriod
+    led.o(.ARM.exidx.text.getRedPeriod) refers to led.o(.text.getRedPeriod) for [Anonymous Symbol]
+    led.o(.text.PIT_IRQHandler) refers to led.o(.bss.redPeriod) for redPeriod
+    led.o(.ARM.exidx.text.PIT_IRQHandler) refers to led.o(.text.PIT_IRQHandler) for [Anonymous Symbol]
+    led.o(.text.initLEDsGPIO) refers to led.o(.rodata.greenLEDs) for greenLEDs
+    led.o(.ARM.exidx.text.initLEDsGPIO) refers to led.o(.text.initLEDsGPIO) for [Anonymous Symbol]
+    led.o(.text.initLEDs) refers to led.o(.rodata.greenLEDs) for greenLEDs
+    led.o(.ARM.exidx.text.initLEDs) refers to led.o(.text.initLEDs) for [Anonymous Symbol]
+    led.o(.text.ledControl) refers to led.o(.rodata.greenLEDs) for greenLEDs
+    led.o(.ARM.exidx.text.ledControl) refers to led.o(.text.ledControl) for [Anonymous Symbol]
     rtx_lib.o(.rodata.os_idle_thread_attr) refers to rtx_lib.o(.bss.os.thread.cb) for [Anonymous Symbol]
     rtx_lib.o(.rodata.os_idle_thread_attr) refers to rtx_lib.o(.bss.os.thread.stack) for [Anonymous Symbol]
     rtx_lib.o(.rodata.os_timer_thread_attr) refers to rtx_lib.o(.bss.os.thread.cb) for [Anonymous Symbol]
@@ -57,6 +75,7 @@ Section Cross References
     startup_mkl25z4.o(RESET) refers to startup_mkl25z4.o(.text) for Reset_Handler
     startup_mkl25z4.o(RESET) refers to irq_cm0.o(.text) for SVC_Handler
     startup_mkl25z4.o(RESET) refers to uart.o(.text.UART2_IRQHandler) for UART2_IRQHandler
+    startup_mkl25z4.o(RESET) refers to led.o(.text.PIT_IRQHandler) for PIT_IRQHandler
     startup_mkl25z4.o(.text) refers to system_mkl25z4.o(.text.SystemInit) for SystemInit
     startup_mkl25z4.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
     system_mkl25z4.o(.ARM.exidx.text.SystemInit) refers to system_mkl25z4.o(.text.SystemInit) for [Anonymous Symbol]
@@ -636,6 +655,19 @@ Removing Unused input sections from the image.
     Removing uart.o(.ARM.exidx.text.initUART2), (8 bytes).
     Removing uart.o(.ARM.exidx.text.UART2_IRQHandler), (8 bytes).
     Removing uart.o(.ARM.exidx.text.extractAxisValues), (8 bytes).
+    Removing led.o(.text), (0 bytes).
+    Removing led.o(.text.initPIT), (108 bytes).
+    Removing led.o(.ARM.exidx.text.initPIT), (8 bytes).
+    Removing led.o(.text.startPIT), (16 bytes).
+    Removing led.o(.ARM.exidx.text.startPIT), (8 bytes).
+    Removing led.o(.text.stopPIT), (16 bytes).
+    Removing led.o(.ARM.exidx.text.stopPIT), (8 bytes).
+    Removing led.o(.ARM.exidx.text.getRedPeriod), (8 bytes).
+    Removing led.o(.ARM.exidx.text.PIT_IRQHandler), (8 bytes).
+    Removing led.o(.text.initLEDsGPIO), (116 bytes).
+    Removing led.o(.ARM.exidx.text.initLEDsGPIO), (8 bytes).
+    Removing led.o(.ARM.exidx.text.initLEDs), (8 bytes).
+    Removing led.o(.ARM.exidx.text.ledControl), (8 bytes).
     Removing rtx_lib.o(.text), (0 bytes).
     Removing rtx_lib.o(.data.irqRtxLibRef), (4 bytes).
     Removing rtx_config.o(.text), (0 bytes).
@@ -998,9 +1030,11 @@ Image Symbol Table
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
     handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
     init.s                                   0x00000000   Number         0  init.o ABSOLUTE
+    led.c                                    0x00000000   Number         0  led.o ABSOLUTE
     main.c                                   0x00000000   Number         0  main.o ABSOLUTE
     motor.c                                  0x00000000   Number         0  motor.o ABSOLUTE
     os_systick.c                             0x00000000   Number         0  os_systick.o ABSOLUTE
+    rtx_delay.c                              0x00000000   Number         0  rtx_delay.o ABSOLUTE
     rtx_kernel.c                             0x00000000   Number         0  rtx_kernel.o ABSOLUTE
     rtx_lib.c                                0x00000000   Number         0  rtx_lib.o ABSOLUTE
     rtx_memory.c                             0x00000000   Number         0  rtx_memory.o ABSOLUTE
@@ -1245,34 +1279,58 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    BuildAttributes$$THM_ISAv3M$S$PE$A:L22$X:L11$S22$IEEE1$IW$~IW$USESV6$~STKCKD$USESV7$~SHL$OTIME$EBA8$MICROLIB$REQ8$PRES8$EABIv2 0x00000000   Number         0  anon$$obj.o ABSOLUTE
-    __Vectors                                0x00000000   Data           4  startup_mkl25z4.o(RESET)
+    tBrain                                   0x00001a49   Thumb Code   184  main.o(.text.tBrain)
+    extractAxisValues                        0x000003e9   Thumb Code    16  uart.o(.text.extractAxisValues)
+    goRight                                  0x000005dd   Thumb Code     8  motor.o(.text.goRight)
+    goLeft                                   0x000005d5   Thumb Code     8  motor.o(.text.goLeft)
+    move                                     0x000008d9   Thumb Code    12  motor.o(.text.move)
+    reverse                                  0x00001261   Thumb Code    12  motor.o(.text.reverse)
+    stopMotor                                0x00001275   Thumb Code    16  motor.o(.text.stopMotor)
+    axisValues                               0x1ffff0aa   Data           2  main.o(.bss.axisValues)
+    isMoving                                 0x1ffff0ac   Data           4  main.o(.bss.isMoving)
+    tMotorControl                            0x00001b79   Thumb Code     2  main.o(.text.tMotorControl)
+    tLED                                     0x00001b09   Thumb Code   108  main.o(.text.tLED)
+    ledControl                               0x0000082d   Thumb Code    72  led.o(.text.ledControl)
+    osDelay                                  0x000008ed   Thumb Code    40  rtx_delay.o(.text.osDelay)
+    getRedPeriod                             0x000003dd   Thumb Code     8  led.o(.text.getRedPeriod)
+    tAudio                                   0x00001a45   Thumb Code     2  main.o(.text.tAudio)
+    main                                     0x0000087d   Thumb Code    76  main.o(.text.main)
+    SystemCoreClockUpdate                    0x00000411   Thumb Code   240  system_mkl25z4.o(.text.SystemCoreClockUpdate)
+    initPWM                                  0x000006ad   Thumb Code   216  motor.o(.text.initPWM)
+    initLEDs                                 0x000005e5   Thumb Code   164  led.o(.text.initLEDs)
+    initUART2                                0x0000079d   Thumb Code   120  uart.o(.text.initUART2)
+    osKernelInitialize                       0x00000915   Thumb Code    40  rtx_kernel.o(.text.osKernelInitialize)
+    osThreadNew                              0x0000123d   Thumb Code    36  rtx_thread.o(.text.osThreadNew)
+    osKernelStart                            0x0000093d   Thumb Code    36  rtx_kernel.o(.text.osKernelStart)
+    UART2_IRQHandler                         0x000005b9   Thumb Code    24  uart.o(.text.UART2_IRQHandler)
+    rx_data                                  0x20000404   Data           1  uart.o(.bss.rx_data)
+    redPeriod                                0x20000400   Data           4  led.o(.bss.redPeriod)
+    PIT_IRQHandler                           0x000003a1   Thumb Code    44  led.o(.text.PIT_IRQHandler)
+    greenLEDs                                0x00001c38   Data          32  led.o(.rodata.greenLEDs)
+    osRtxConfig                              0x00001b98   Data         104  rtx_lib.o(.rodata)
+    osRtxUserSVC                             0x00001c58   Data           4  rtx_lib.o(.rodata.osRtxUserSVC)
+    os_cb_sections                           0x00001c00   Data          56  rtx_lib.o(.rodata)
+    .bss.os.thread.cb$$Base                  0x20000174   Number         0  rtx_lib.o(.bss.os.thread.cb)
+    .bss.os.thread.cb$$Limit                 0x200001fc   Number         0  rtx_lib.o(.bss.os.thread.cb)
+    .bss.os.timer.cb$$Base                    - Undefined Weak Reference
+    .bss.os.timer.cb$$Limit                   - Undefined Weak Reference
     .bss.os.evflags.cb$$Base                  - Undefined Weak Reference
     .bss.os.evflags.cb$$Limit                 - Undefined Weak Reference
-    .bss.os.mempool.cb$$Base                  - Undefined Weak Reference
-    .bss.os.mempool.cb$$Limit                 - Undefined Weak Reference
     .bss.os.mutex.cb$$Base                    - Undefined Weak Reference
     .bss.os.mutex.cb$$Limit                   - Undefined Weak Reference
     .bss.os.semaphore.cb$$Base                - Undefined Weak Reference
     .bss.os.semaphore.cb$$Limit               - Undefined Weak Reference
-    .bss.os.timer.cb$$Base                    - Undefined Weak Reference
-    .bss.os.timer.cb$$Limit                   - Undefined Weak Reference
-    __cpp_initialize__aeabi_                  - Undefined Weak Reference
-    __cxa_finalize                            - Undefined Weak Reference
-    __decompress                              - Undefined Weak Reference
-    _clock_init                               - Undefined Weak Reference
-    _microlib_exit                            - Undefined Weak Reference
-    __Vectors_End                            0x000000c0   Data           0  startup_mkl25z4.o(RESET)
+    .bss.os.mempool.cb$$Base                  - Undefined Weak Reference
+    .bss.os.mempool.cb$$Limit                 - Undefined Weak Reference
+    .bss.os.msgqueue.cb$$Base                0x200000f0   Number         0  rtx_lib.o(.bss.os.msgqueue.cb)
+    .bss.os.msgqueue.cb$$Limit               0x20000124   Number         0  rtx_lib.o(.bss.os.msgqueue.cb)
+    osRtxIdleThread                          0x000003ff   Thumb Code     2  rtx_config.o(.text.osRtxIdleThread)
+    osRtxErrorNotify                         0x000003fd   Thumb Code     2  rtx_config.o(.text.osRtxErrorNotify)
     __Vectors_Size                           0x000000c0   Number         0  startup_mkl25z4.o ABSOLUTE
-    __main                                   0x000000c1   Thumb Code     0  entry.o(.ARM.Collect$$$$00000000)
-    _main_stk                                0x000000c1   Thumb Code     0  entry2.o(.ARM.Collect$$$$00000001)
-    _main_scatterload                        0x000000c5   Thumb Code     0  entry5.o(.ARM.Collect$$$$00000004)
-    __main_after_scatterload                 0x000000c9   Thumb Code     0  entry5.o(.ARM.Collect$$$$00000004)
-    _main_clock                              0x000000c9   Thumb Code     0  entry7b.o(.ARM.Collect$$$$00000008)
-    _main_cpp_init                           0x000000c9   Thumb Code     0  entry8b.o(.ARM.Collect$$$$0000000A)
-    _main_init                               0x000000c9   Thumb Code     0  entry9a.o(.ARM.Collect$$$$0000000B)
-    __rt_final_cpp                           0x000000d1   Thumb Code     0  entry10a.o(.ARM.Collect$$$$0000000D)
-    __rt_final_exit                          0x000000d1   Thumb Code     0  entry11a.o(.ARM.Collect$$$$0000000F)
+    __Vectors                                0x00000000   Data           4  startup_mkl25z4.o(RESET)
+    __Vectors_End                            0x000000c0   Data           0  startup_mkl25z4.o(RESET)
+    __initial_sp                             0x20000508   Data           0  startup_mkl25z4.o(STACK)
+    SystemInit                               0x000003d1   Thumb Code     8  system_mkl25z4.o(.text.SystemInit)
     Reset_Handler                            0x000000d5   Thumb Code    12  startup_mkl25z4.o(.text)
     NMI_Handler                              0x000000e1   Thumb Code     2  startup_mkl25z4.o(.text)
     HardFault_Handler                        0x000000e3   Thumb Code     2  startup_mkl25z4.o(.text)
@@ -1291,7 +1349,6 @@ Image Symbol Table
     LPTMR0_IRQHandler                        0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
     LVD_LVW_IRQHandler                       0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
     MCG_IRQHandler                           0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
-    PIT_IRQHandler                           0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
     PORTA_IRQHandler                         0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
     PORTD_IRQHandler                         0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
     RTC_IRQHandler                           0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
@@ -1308,6 +1365,34 @@ Image Symbol Table
     UART0_IRQHandler                         0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
     UART1_IRQHandler                         0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
     USB0_IRQHandler                          0x000000eb   Thumb Code     0  startup_mkl25z4.o(.text)
+    SystemCoreClock                          0x1ffff000   Data           4  system_mkl25z4.o(.data.SystemCoreClock)
+    OS_Tick_Enable                           0x0000032d   Thumb Code    36  os_systick.o(.text.OS_Tick_Enable)
+    OS_Tick_GetIRQn                          0x00000351   Thumb Code     6  os_systick.o(.text.OS_Tick_GetIRQn)
+    OS_Tick_Setup                            0x00000359   Thumb Code    72  os_systick.o(.text.OS_Tick_Setup)
+    osRtxInfo                                0x1ffff004   Data         164  rtx_kernel.o(.data.os)
+    osRtxKernelPreInit                       0x00000a71   Thumb Code     2  rtx_kernel.o(.text.osRtxKernelPreInit)
+    osRtxMemoryInit                          0x00000b3d   Thumb Code    50  rtx_memory.o(.text.osRtxMemoryInit)
+    osRtxMemoryPoolInit                      0x00000bd7   Thumb Code    62  rtx_mempool.o(.text.osRtxMemoryPoolInit)
+    osRtxThreadDelayTick                     0x00000ee9   Thumb Code    52  rtx_thread.o(.text.osRtxThreadDelayTick)
+    osRtxThreadDispatch                      0x00000f1d   Thumb Code    76  rtx_thread.o(.text.osRtxThreadDispatch)
+    osRtxThreadListGet                       0x00000fb9   Thumb Code    20  rtx_thread.o(.text.osRtxThreadListGet)
+    osRtxThreadStartup                       0x0000107d   Thumb Code    56  rtx_thread.o(.text.osRtxThreadStartup)
+    osRtxThreadSwitch                        0x000010b5   Thumb Code    20  rtx_thread.o(.text.osRtxThreadSwitch)
+    osRtxMemoryAlloc                         0x00000a73   Thumb Code   124  rtx_memory.o(.text.osRtxMemoryAlloc)
+    osRtxMemoryFree                          0x00000aef   Thumb Code    78  rtx_memory.o(.text.osRtxMemoryFree)
+    osRtxMemoryPoolAlloc                     0x00000b6f   Thumb Code    46  rtx_mempool.o(.text.osRtxMemoryPoolAlloc)
+    osRtxMemoryPoolFree                      0x00000b9d   Thumb Code    58  rtx_mempool.o(.text.osRtxMemoryPoolFree)
+    osRtxMutexOwnerRelease                   0x00000cd1   Thumb Code    68  rtx_mutex.o(.text.osRtxMutexOwnerRelease)
+    osRtxPostProcess                         0x00000d91   Thumb Code   104  rtx_system.o(.text.osRtxPostProcess)
+    osRtxThreadListPut                       0x00000fcd   Thumb Code    44  rtx_thread.o(.text.osRtxThreadListPut)
+    osRtxThreadListRemove                    0x00000ff9   Thumb Code    24  rtx_thread.o(.text.osRtxThreadListRemove)
+    osRtxThreadReadyPut                      0x00001039   Thumb Code    20  rtx_thread.o(.text.osRtxThreadReadyPut)
+    osRtxThreadRegPtr                        0x0000104d   Thumb Code     6  rtx_thread.o(.text.osRtxThreadRegPtr)
+    osRtxThreadStackCheck                    0x00001055   Thumb Code    40  rtx_thread.o(.text.osRtxThreadStackCheck)
+    osRtxThreadWaitEnter                     0x000010c9   Thumb Code    60  rtx_thread.o(.text.osRtxThreadWaitEnter)
+    osRtxThreadWaitExit                      0x00001105   Thumb Code    34  rtx_thread.o(.text.osRtxThreadWaitExit)
+    osRtxTimerThread                         0x00001199   Thumb Code    56  rtx_timer.o(.text.osRtxTimerThread)
+    osThreadExit                             0x00001231   Thumb Code    12  rtx_thread.o(.text.osThreadExit)
     SVC_Handler                              0x000000fd   Thumb Code   132  irq_cm0.o(.text)
     PendSV_Handler                           0x00000181   Thumb Code    12  irq_cm0.o(.text)
     SysTick_Handler                          0x0000018d   Thumb Code    12  irq_cm0.o(.text)

@@ -1,5 +1,5 @@
 #include "init.h"
-
+/*
 void initPWM(void) {
 	//Enable Clock Gating for PORTB
 	SIM_SCGC5 |= SIM_SCGC5_PORTB_MASK;
@@ -63,3 +63,4 @@ void initPWM(void) {
 	TPM2_C1SC |= (TPM_CnSC_ELSB(1) | TPM_CnSC_MSB(1));
 
 }
+*/

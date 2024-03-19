@@ -16,6 +16,9 @@ static void delay(uint32_t milliseconds)
 	}
 }
 
+// 0 = Stationary, 1 = Moving
+volatile int isMoving = 0;
+
 // Only accessed by perform movement thread for now
 // At global to be seen in debugger
 struct AxisValues axisValues;
@@ -36,9 +39,6 @@ void tMotorControl(void *argument)
 {
 }
 
-// 0 = Stationary, 1 = Moving
-volatile int isMoving = 0;
-
 /**
  * LED thread
  * Requirements:
@@ -53,8 +53,6 @@ volatile int isMoving = 0;
  * State must be updated by the motor thread
  * Clock for timing the flashing
  **/
-
-volatile int redPeriod = 0; // counts from 0-3, increments every 250ms
 
 void tLED(void *argument)
 {
