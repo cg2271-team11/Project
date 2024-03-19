@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Core Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Core Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6130100: Last Updated: Tue Mar 19 14:44:05 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6130100: Last Updated: Wed Mar 20 00:56:57 2024
 <BR><P>
 <H3>Maximum Stack Usage =        120 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -652,8 +652,10 @@ Global Symbols
 <P><STRONG><a name="[2d]"></a>tAudio</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, main.o(.text.tAudio))
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[2a]"></a>tBrain</STRONG> (Thumb, 360 bytes, Stack size 0 bytes, main.o(.text.tBrain))
-<BR><BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveAll
+<P><STRONG><a name="[2a]"></a>tBrain</STRONG> (Thumb, 420 bytes, Stack size 8 bytes, main.o(.text.tBrain))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = tBrain
+</UL>
+<BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;moveAll
 <LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;extractAxisValues
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)

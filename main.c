@@ -63,24 +63,24 @@ void tBrain(void *argument)
       switch (axisValues.x_axis)
       {
       case 0x01:
-        leftSpeed -= 3 * 1250;
+        leftSpeed -= 3 * 1000;
         break;
       case 0x02:
-        leftSpeed -= 2 * 1250;
+        leftSpeed -= 2 * 1000;
         break;
       case 0x03:
-        leftSpeed -= 1 * 1250;
+        leftSpeed -= 1 * 1000;
         break;
       case 0x04:
         break;
       case 0x05:
-        rightSpeed -= 1 * 1250;
+        rightSpeed -= 1 * 1000;
         break;
       case 0x06:
-        rightSpeed -= 2 * 1250;
+        rightSpeed -= 2 * 1000;
         break;
       case 0x07:
-        rightSpeed -= 3 * 1250;
+        rightSpeed -= 3 * 1000;
         break;
       }
     }
@@ -89,24 +89,24 @@ void tBrain(void *argument)
       switch (axisValues.x_axis)
       {
       case 0x01:
-        leftSpeed += 3 * 1250;
+        leftSpeed += 3 * 1000;
         break;
       case 0x02:
-        leftSpeed += 2 * 1250;
+        leftSpeed += 2 * 1000;
         break;
       case 0x03:
-        leftSpeed += 1 * 1250;
+        leftSpeed += 1 * 1000;
         break;
       case 0x04:
         break;
       case 0x05:
-        rightSpeed += 1 * 1250;
+        rightSpeed += 1 * 1000;
         break;
       case 0x06:
-        rightSpeed += 2 * 1250;
+        rightSpeed += 2 * 1000;
         break;
       case 0x07:
-        rightSpeed += 3 * 1250;
+        rightSpeed += 3 * 1000;
         break;
       }
     }
