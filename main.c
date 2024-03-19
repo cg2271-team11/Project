@@ -15,6 +15,9 @@ static void delay(uint32_t milliseconds)
   }
 }
 
+volatile int16_t leftSpeed;
+volatile int16_t rightSpeed;
+
 // Only accessed by perform movement thread for now
 // At global to be seen in debugger
 struct AxisValues axisValues;
@@ -26,7 +29,7 @@ void tBrain(void *argument)
   {
     axisValues = extractAxisValues();
 
-    uint16_t speed = 0;
+    int16_t speed = 0;
     switch (axisValues.y_axis)
     {
     case 0x01:
@@ -52,8 +55,8 @@ void tBrain(void *argument)
       break;
     }
 
-    uint16_t leftSpeed = speed;
-    uint16_t rightSpeed = speed;
+    leftSpeed = speed;
+    rightSpeed = speed;
 
     if (speed > 0)
     {
