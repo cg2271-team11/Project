@@ -1,0 +1,8 @@
+# Ignore this idiots
+*.uvoptx
+*.uvprojx
+*.uvgix.*
+*.scvd
+
+Objects/
+Listings/

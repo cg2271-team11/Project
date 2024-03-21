@@ -3,83 +3,40 @@
 #include "uart.h"
 #include "audio.h"
 #include "RTE_Components.h"
-#include  CMSIS_device_header
+#include CMSIS_device_header
 #include "cmsis_os2.h"
 #include <stdbool.h>
 
 // Only accessed by perform movement thread for now
 // At global to be seen in debugger
 struct AxisValues axisValues;
+// Only accessed by perform movement thread for now
+// At global to be seen in debugger
+struct UartValues uartValues;
+struct MotorSpeed motorSpeed;
+volatile uint8_t button;
+
 
 bool courseEnded = false;
 
 void tBrain(void* argument){
 	// Should instead send some value to motor thread 
 	// which handles the movement
-	while(1) {
-		axisValues = extractAxisValues();
-		//uint16_t endButton = extractEndButton();
-		//if (endButton == 1) {
-		//	courseEnded = true;	
-		//}
-		int shouldStop = 0;
-		switch(axisValues.x_axis) {
-			case 0x01:
-				goRight(3750);
-				break;
-			case 0x02:
-				goRight(1600);
-				break;
-			case 0x03:
-				goRight(800);
-				break;
-			case 0x04: 
-				shouldStop = 1;
-				break;
-			case 0x05:
-				goLeft(800);
-				break;
-			case 0x06:
-				goLeft(1600);
-				break;
-			case 0x07:
-				goLeft(3750);
-				break;								
-		}
-		switch(axisValues.y_axis) {
-			case 0x01:
-				reverse(3750);
-				break;
-			case 0x02:
-				reverse(1600);
-				break;
-			case 0x03:
-				reverse(800);
-				break;
-			case 0x04:
-				if(shouldStop){
-					stopMotor();
-				}
-				break;
-			case 0x05:
-				move(800);
-				break;
-			case 0x06:
-				move(1600);
-				break;
-			case 0x07:
-				move(3750);
-				break;								
-		}
-	}
+	while (1)
+    {
+      uartValues = extractUartValues();
+      button = uartValues.button;
+      motorSpeed = calculateSpeed(uartValues.x_axis, uartValues.y_axis);
+      moveAll(motorSpeed.leftSpeed, motorSpeed.rightSpeed);
+    }
 }
 
-void tMotorControl(void* argument){
-	
+void tMotorControl(void *argument)
+{
 }
 
-void tLED(void* argument){
-	
+void tLED(void *argument)
+{
 }
 
 
