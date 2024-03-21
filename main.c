@@ -15,12 +15,10 @@ static void delay(uint32_t milliseconds)
   }
 }
 
-volatile int16_t leftSpeed;
-volatile int16_t rightSpeed;
-
 // Only accessed by perform movement thread for now
 // At global to be seen in debugger
 struct AxisValues axisValues;
+struct MotorSpeed motorSpeed;
 void tBrain(void *argument)
 {
   // Should instead send some value to motor thread
@@ -28,121 +26,8 @@ void tBrain(void *argument)
   while (1)
   {
     axisValues = extractAxisValues();
-
-    int16_t speed = 0;
-    switch (axisValues.y_axis)
-    {
-    case 0x01:
-      speed = -3750;
-      break;
-    case 0x02:
-      speed = -2500;
-      break;
-    case 0x03:
-      speed = -1250;
-      break;
-    case 0x04:
-      speed = 0;
-      break;
-    case 0x05:
-      speed = 1250;
-      break;
-    case 0x06:
-      speed = 2500;
-      break;
-    case 0x07:
-      speed = 3750;
-      break;
-    }
-
-    leftSpeed = speed;
-    rightSpeed = speed;
-
-    if (speed > 0)
-    {
-      switch (axisValues.x_axis)
-      {
-      case 0x01:
-        leftSpeed -= 3 * 1000;
-        break;
-      case 0x02:
-        leftSpeed -= 2 * 1000;
-        break;
-      case 0x03:
-        leftSpeed -= 1 * 1000;
-        break;
-      case 0x04:
-        break;
-      case 0x05:
-        rightSpeed -= 1 * 1000;
-        break;
-      case 0x06:
-        rightSpeed -= 2 * 1000;
-        break;
-      case 0x07:
-        rightSpeed -= 3 * 1000;
-        break;
-      }
-    }
-    else if (speed < 0)
-    {
-      switch (axisValues.x_axis)
-      {
-      case 0x01:
-        leftSpeed += 3 * 1000;
-        break;
-      case 0x02:
-        leftSpeed += 2 * 1000;
-        break;
-      case 0x03:
-        leftSpeed += 1 * 1000;
-        break;
-      case 0x04:
-        break;
-      case 0x05:
-        rightSpeed += 1 * 1000;
-        break;
-      case 0x06:
-        rightSpeed += 2 * 1000;
-        break;
-      case 0x07:
-        rightSpeed += 3 * 1000;
-        break;
-      }
-    }
-    else
-    {
-      switch (axisValues.x_axis)
-      {
-      case 0x01:
-        leftSpeed -= 3 * 1250;
-        rightSpeed += 3 * 1250;
-        break;
-      case 0x02:
-        leftSpeed -= 2 * 1250;
-        rightSpeed += 2 * 1250;
-        break;
-      case 0x03:
-        leftSpeed -= 1 * 1250;
-        rightSpeed += 1 * 1250;
-        break;
-      case 0x04:
-        break;
-      case 0x05:
-        leftSpeed += 1 * 1250;
-        rightSpeed -= 1 * 1250;
-        break;
-      case 0x06:
-        leftSpeed += 2 * 1250;
-        rightSpeed -= 2 * 1250;
-        break;
-      case 0x07:
-        leftSpeed += 3 * 1250;
-        rightSpeed -= 3 * 1250;
-        break;
-      }
-    }
-    moveAll(leftSpeed, rightSpeed);
+    motorSpeed = calculateSpeed(axisValues.x_axis, axisValues.y_axis);
+    moveAll(motorSpeed.leftSpeed, motorSpeed.rightSpeed);
   }
 }
 

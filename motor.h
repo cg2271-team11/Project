@@ -15,3 +15,11 @@ void reverse(uint16_t speed);
 void goLeft(uint16_t speed);
 void goRight(uint16_t speed);
 void moveAll(int16_t leftSpeed, int16_t rightSpeed);
+
+struct MotorSpeed
+{
+  int16_t leftSpeed;
+  int16_t rightSpeed;
+};
+
+struct MotorSpeed calculateSpeed(uint8_t x_axis, uint8_t y_axis);
