@@ -1,4 +1,4 @@
-./objects/motor.o: motor.c motor.h \
+./objects/led.o: led.c led.h \
   C:\Users\hftoh\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.1\Device\Include\MKL25Z4.h \
   C:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
   C:\Users\hftoh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm0plus.h \
