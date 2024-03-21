@@ -46,16 +46,16 @@ const int greenLEDs[] = {GREEN_LED_0, GREEN_LED_1, GREEN_LED_2, GREEN_LED_3, GRE
     // Enable counter
     PIT->CHANNEL[0].TCTRL &= ~PIT_TCTRL_TEN_MASK;
  }
- 
- 
+
+
 volatile int redPeriod = 0; // counts from 0-3, increments every 250ms
- 
+
 int getRedPeriod(){
 	return redPeriod;
 }
- 
+
 void PIT_IRQHandler(void) {
-	
+
     //clear pending IRQ
     NVIC_ClearPendingIRQ(PIT_IRQn);
     if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK) {
@@ -70,22 +70,22 @@ void PIT_IRQHandler(void) {
     // // IO PINS
 	// Enable Clock to PORTD and PORTC
 	SIM->SCGC5 |= ((SIM_SCGC5_PORTD_MASK) | (SIM_SCGC5_PORTC_MASK));
-	
+
 	 // Configure MUX settings and port data directions
 	PORTD->PCR[RED_LED] &= ~PORT_PCR_MUX_MASK;
 	PORTD->PCR[RED_LED] |= PORT_PCR_MUX(1);
 	PTD->PDDR |= MASK(RED_LED);
-	
+
 	 for (int i = 0; i < NUM_LEDS; i++){
      PORTC->PCR[greenLEDs[i]] &= ~PORT_PCR_MUX_MASK;
      PORTC->PCR[greenLEDs[i]] |= PORT_PCR_MUX(1);
 		 PTC->PDDR |= MASK(greenLEDs[i]);
    }
-	
+
  }
 
 void initLEDs(void){
-    initPIT();
+    // initPIT();
     initLEDsGPIO();
 }
 
