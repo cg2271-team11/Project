@@ -22,7 +22,7 @@ void tBrain(void* argument){
 	while(1) {
 		axisValues = extractAxisValues();
 
-		uint16_t y_speed = 0;
+		int16_t y_speed = 0;
 		switch(axisValues.y_axis) {
 			case 0x01:
 				y_speed = -3750;
@@ -46,8 +46,8 @@ void tBrain(void* argument){
 				y_speed = 3750;
 				break;								
 		}
-		uint16_t leftSpeed = y_speed;
-		uint16_t rightSpeed = y_speed;
+		int16_t leftSpeed = y_speed;
+		int16_t rightSpeed = y_speed;
 		int direction = 0;
 		if(y_speed >= 0){
 			direction = 1;

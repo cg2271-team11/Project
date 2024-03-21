@@ -93,7 +93,7 @@ void goRight(uint16_t speed) {
 	//TPM2_C0V = 0;  // RIGHT_FRONT_W
 	//TPM2_C1V = 0; 		// RIGHT_BACK_W
 }
-void moveAll(uint16_t leftSpeed, uint16_t rightSpeed){
+void moveAll(int16_t leftSpeed, int16_t rightSpeed){
 	if(leftSpeed < 0){
 		TPM1_C1V = -leftSpeed;	// LEFT_BACK_W
 	}else{
