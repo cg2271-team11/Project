@@ -56,27 +56,27 @@ void tBrain(void* argument){
 		}
 		switch(axisValues.x_axis) {
 			case 0x01:
-				// Most right
-				rightSpeed -= direction * 3750;
+				// Most left
+				leftSpeed -= direction * 3750;
 				break;
 			case 0x02:
-				rightSpeed -= direction * 1600;
+				leftSpeed -= direction * 1600;
 				break;
 			case 0x03:
-				rightSpeed -= direction * 800;
+				leftSpeed -= direction * 800;
 				break;
 			case 0x04: 
 				// Do not change status of right and left speed at all
 				break;
 			case 0x05:
-				leftSpeed -= direction * 800;
+				rightSpeed -= direction * 800;
 				break;
 			case 0x06:
-				leftSpeed -= direction * 1600;
+				rightSpeed -= direction * 1600;
 				break;
 			case 0x07:
-				// Most left
-				leftSpeed -= direction * 3750;
+				// Most right
+				rightSpeed -= direction * 3750;
 				break;								
 		}
 		moveAll(leftSpeed, rightSpeed);
