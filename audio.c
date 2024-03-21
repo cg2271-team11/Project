@@ -16,7 +16,7 @@ void initAudioPWM(void) {
 	SIM->SOPT2 |= SIM_SOPT2_TPMSRC(1); // MCGFLLCLK OR MCGPLLCLK/2
 
 	// set modulo value 48000000/128 = 375000, 375000Hz/(50Hz) = 7500 Edge aligned
-	TPM0->MOD = 3500;
+	TPM0->MOD = 7500;
 
 	// Set Edge aligned PWM mode
 	TPM0->SC &= ~(TPM_SC_CPWMS_MASK);

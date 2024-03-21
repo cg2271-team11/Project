@@ -82,130 +82,57 @@ void tLED(void* argument){
 	
 }
 
+void setNote(uint32_t freq)
+{
+    if (freq == 0)
+    {
+        TPM0->MOD = 0;
+				TPM0_C5V = 0;
+        return;
+    }
+    uint32_t mod = (375000 / (freq));
+    TPM0->MOD = mod;
+    TPM0_C5V = mod / 2; // 50% duty cycle
+}
+
 void tAudio(void* argument){
-   uint32_t melody[] = {
-     E4, G4, A4, A4, 0,
-    A4, B4, C5, C5, 0,
-    C5, D5, B4, B4, 0,
-    A4, G4, A4, 0,
+   uint32_t beginningMelody[] = {
+    E4, E4, 0, E4, 0, C4, E4, 0, G4, 0, 0,  G3, 0, 0, 0,
+    C4, 0, 0, G3, 0, 0, E3, 0, 0, A3, 0, B3, 0, AS3, A3, 0,
+    G3, E4, G4, A4, 0, F4, G4, 0, E4, 0, C4, D4, B3, 0, 0,
+    C4, 0, 0, G3, 0, 0, E3, 0, 0, A3, 0, B3, 0, AS3, A3, 0,
+    G3, E4, G4, A4, 0, F4, G4, 0, E4, 0, C4, D4, B3, 0, 0
+    // This is a simplified and partial representation.
+	};
+	 uint32_t beginningNoteDurations[] = {
+    150, 150, 100, 150, 100, 300, 300, 100, 300, 100, 100, 300, 100, 100, 100,
+    300, 100, 100, 300, 100, 100, 300, 100, 100, 300, 100, 300, 100, 300, 100,
+    300, 300, 300, 300, 100, 300, 300, 100, 300, 100, 300, 300, 300, 100, 100,
+    300, 100, 100, 300, 100, 100, 300, 100, 100, 300, 100, 300, 100, 300, 100,
+    300, 300, 300, 300, 100, 300, 300, 100, 300, 100, 300, 300, 300, 100, 100
+};
+	 
+const int CD = 600;
+uint32_t endingMelody[] = {
+    C4,E4,G4,C5,E5,G5,E5,0,C4,DS4,GS4,C5,DS5,GS5,E5,0,
+		D4,F4,AS4,D5,F5,AS5,AS5,AS5,AS5,C6
+};
 
-    E4, G4, A4, A4, 0,
-    A4, B4, C5, C5, 0,
-    C5, D5, B4, B4, 0,
-    A4, G4, A4, 0,
-
-    E4, G4, A4, A4, 0,
-    A4, C5, D5, D5, 0,
-    D5, E5, F5, F5, 0,
-    E5, D5, E5, A4, 0,
-
-    A4, B4, C5, C5, 0,
-    D5, E5, A4, 0,
-    A4, C5, B4, B4, 0,
-    C5, A4, B4, 0,
-
-    A4, A4,
-    //Repeat of first part
-    A4, B4, C5, C5, 0,
-    C5, D5, B4, B4, 0,
-    A4, G4, A4, 0,
-
-    E4, G4, A4, A4, 0,
-    A4, B4, C5, C5, 0,
-    C5, D5, B4, B4, 0,
-    A4, G4, A4, 0,
-
-    E4, G4, A4, A4, 0,
-    A4, C5, D5, D5, 0,
-    D5, E5, F5, F5, 0,
-    E5, D5, E5, A4, 0,
-
-    A4, B4, C5, C5, 0,
-    D5, E5, A4, 0,
-    A4, C5, B4, B4, 0,
-    C5, A4, B4, 0,
-    //End of Repeat
-
-    E5, 0, 0, F5, 0, 0,
-    E5, E5, 0, G5, 0, E5, D5, 0, 0,
-    D5, 0, 0, C5, 0, 0,
-    B4, C5, 0, B4, 0, A4,
-
-    E5, 0, 0, F5, 0, 0,
-    E5, E5, 0, G5, 0, E5, D5, 0, 0,
-    D5, 0, 0, C5, 0, 0,
-    B4, C5, 0, B4, 0, A4
-    };
-
-    // Note durations: 1 = quarter note, 2 = half note, etc.
-    // For a faster tempo, you may adjust these durations
-    uint32_t noteDurations[] = {
-          125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 375, 125,
-
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 375, 125,
-
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 125, 250, 125,
-
-    125, 125, 250, 125, 125,
-    250, 125, 250, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 375, 375,
-
-    250, 125,
-    //Rpeat of First Part
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 375, 125,
-
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 375, 125,
-
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 125, 250, 125,
-
-    125, 125, 250, 125, 125,
-    250, 125, 250, 125,
-    125, 125, 250, 125, 125,
-    125, 125, 375, 375,
-    //End of Repeat
-
-    250, 125, 375, 250, 125, 375,
-    125, 125, 125, 125, 125, 125, 125, 125, 375,
-    250, 125, 375, 250, 125, 375,
-    125, 125, 125, 125, 125, 500,
-
-    250, 125, 375, 250, 125, 375,
-    125, 125, 125, 125, 125, 125, 125, 125, 375,
-    250, 125, 375, 250, 125, 375,
-    125, 125, 125, 125, 125, 500
-    };
+// Corresponding note durations in milliseconds (ms)
+uint32_t endingNoteDurations[] = {
+	CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/2,CD,CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/2,CD,CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/3,CD/3,CD/3,CD * 4
+};
 
     while (1) {
-        int notes = sizeof(melody) / sizeof(melody[0]);
-
-        for (int thisNote = 0; thisNote < notes; thisNote++) {
+        int beginningNotes = sizeof(beginningMelody) / sizeof(beginningMelody[0]);
+        int endingNotes = sizeof(endingMelody) / sizeof(endingMelody[0]);
+			//setNote(E4);
+        for (int thisNote = 0; thisNote < beginningNotes; thisNote++) {
             // To play a note, set the PWM frequency to the note's frequency
-					if (melody[thisNote] != 0) {
-						TPM0_C5V = 0; //melody[thisNote];
-					} else {
-						TPM0_C5V = 0; // Stop the notef
-					}
+					setNote(beginningMelody[thisNote]);
 
             // To simulate the note's duration, wait for the duration, then stop.
-            delay(noteDurations[thisNote]);
+          delay(beginningNoteDurations[thisNote] / 4);
             //TPM0_C5V = 0; // Stop the note
             //delay(50); // Delay between notes
         }

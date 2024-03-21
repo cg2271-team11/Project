@@ -1,7 +1,7 @@
 Dependencies for Project 'Core Project', Target 'Target 1': (DO NOT MODIFY !)
 CompilerVersion: 6130001::V6.13.1::.\ARMCLANG
-F (.\main.c)(0x65F87DC4)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4 -DUSE_STDPERIPH_DRIVER-o ./objects/main.o -MD)
-I (motor.h)(0x65E2F30F)
+F (.\main.c)(0x65FBFEAA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4 -DUSE_STDPERIPH_DRIVER-o ./objects/main.o -MD)
+I (motor.h)(0x65FBEA18)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.1\Device\Include\MKL25Z4.h)(0x585B7C0A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB34DA0)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm0plus.h)(0x5D2590B6)
@@ -10,14 +10,14 @@ I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cms
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armclang.h)(0x5D2590B6)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x5A8EB578)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5D8A1E5E)
-I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x56441C9A)
-I (uart.h)(0x65E2F30F)
-I (audio.h)(0x65F87D53)
+I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x65FBF1E8)
+I (uart.h)(0x65FBEA18)
+I (audio.h)(0x65FBEA18)
 I (RTE\_Target_1\RTE_Components.h)(0x65F55B16)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\RTOS2\Include\cmsis_os2.h)(0x5C8F1798)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stddef.h)(0x5DB34DA0)
-F (.\motor.c)(0x65F8641C)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4-o ./objects/motor.o -MD)
-I (motor.h)(0x65E2F30F)
+F (.\motor.c)(0x65FBEA18)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4-o ./objects/motor.o -MD)
+I (motor.h)(0x65FBEA18)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.1\Device\Include\MKL25Z4.h)(0x585B7C0A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB34DA0)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm0plus.h)(0x5D2590B6)
@@ -26,10 +26,10 @@ I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cms
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armclang.h)(0x5D2590B6)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x5A8EB578)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5D8A1E5E)
-I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x56441C9A)
-F (.\motor.h)(0x65E2F30F)()
-F (.\uart.c)(0x65F55ADA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4-o ./objects/uart.o -MD)
-I (uart.h)(0x65E2F30F)
+I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x65FBF1E8)
+F (.\motor.h)(0x65FBEA18)()
+F (.\uart.c)(0x65FBEA18)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4-o ./objects/uart.o -MD)
+I (uart.h)(0x65FBEA18)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.1\Device\Include\MKL25Z4.h)(0x585B7C0A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB34DA0)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm0plus.h)(0x5D2590B6)
@@ -38,10 +38,10 @@ I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cms
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armclang.h)(0x5D2590B6)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x5A8EB578)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5D8A1E5E)
-I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x56441C9A)
-F (.\uart.h)(0x65E2F30F)()
-F (.\audio.c)(0x65F87D54)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4-o ./objects/audio.o -MD)
-I (audio.h)(0x65F87D53)
+I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x65FBF1E8)
+F (.\uart.h)(0x65FBEA18)()
+F (.\audio.c)(0x65FBF1EA)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4-o ./objects/audio.o -MD)
+I (audio.h)(0x65FBEA18)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.1\Device\Include\MKL25Z4.h)(0x585B7C0A)
 I (C:\Keil_v5\ARM\ARMCLANG\include\stdint.h)(0x5DB34DA0)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm0plus.h)(0x5D2590B6)
@@ -50,8 +50,8 @@ I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cms
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armclang.h)(0x5D2590B6)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x5A8EB578)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5D8A1E5E)
-I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x56441C9A)
-F (.\audio.h)(0x65F87D53)()
+I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x65FBF1E8)
+F (.\audio.h)(0x65FBEA18)()
 F (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\RTOS2\RTX\Library\ARM\RTX_CM0.lib)(0x5D2590B8)()
 F (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\RTOS2\RTX\Source\rtx_lib.c)(0x5D2590B8)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__RTX -D__EVAL -D__MICROLIB -gdwarf-3 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I./RTE/CMSIS-I./RTE/Device/MKL25Z128xxx4-I./RTE/_Target_1-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/Core/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Include-IC:/Users/firwe/AppData/Local/Arm/Packs/Keil/Kinetis_KLxx_DFP/1.15.1/Device/Include-D__UVISION_VERSION="529" -D_RTE_ -DMKL25Z128xxx4-o ./objects/rtx_lib.o -MD)
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D2590B6)
@@ -85,5 +85,5 @@ I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cms
 I (C:\Users\firwe\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armclang.h)(0x5D2590B6)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_compat.h)(0x5A8EB578)
 I (C:\Keil_v5\ARM\ARMCLANG\include\arm_acle.h)(0x5D8A1E5E)
-I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x56441C9A)
-F (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x56441C9A)()
+I (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x65FBF1E8)
+F (RTE\Device\MKL25Z128xxx4\system_MKL25Z4.h)(0x65FBF1E8)()
