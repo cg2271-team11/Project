@@ -41,13 +41,14 @@ void UART2_IRQHandler(void)
   }
 }
 
-struct AxisValues extractAxisValues()
+struct UartValues extractUartValues()
 {
   // rx_data = UART2_Receive_Poll();
 
-  struct AxisValues values;
-  values.x_axis = (rx_data >> 4) & 0x0F; // Extract x-axis value
-  values.y_axis = rx_data & 0x0F;        // Extract y-axis value
+  struct UartValues values;
+	values.button = (rx_data >> 6) & 0x01; // Extract button value
+  values.x_axis = (rx_data >> 3) & 0x07; // Extract x-axis value
+  values.y_axis = rx_data & 0x07;        // Extract y-axis value
 
   return values;
 }

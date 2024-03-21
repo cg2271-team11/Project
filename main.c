@@ -17,16 +17,18 @@ static void delay(uint32_t milliseconds)
 
 // Only accessed by perform movement thread for now
 // At global to be seen in debugger
-struct AxisValues axisValues;
+struct UartValues uartValues;
 struct MotorSpeed motorSpeed;
+volatile uint8_t button;
 void tBrain(void *argument)
 {
   // Should instead send some value to motor thread
   // which handles the movement
   while (1)
   {
-    axisValues = extractAxisValues();
-    motorSpeed = calculateSpeed(axisValues.x_axis, axisValues.y_axis);
+    uartValues = extractUartValues();
+		button = uartValues.button;
+    motorSpeed = calculateSpeed(uartValues.x_axis, uartValues.y_axis);
     moveAll(motorSpeed.leftSpeed, motorSpeed.rightSpeed);
   }
 }
