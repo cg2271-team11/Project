@@ -2,9 +2,11 @@
 #include "motor.h"
 #include "uart.h"
 #include "led.h"
+#include "audio.h"
 #include "RTE_Components.h"
 #include CMSIS_device_header
 #include "cmsis_os2.h"
+#include <stdbool.h>
 
 static void delay(uint32_t milliseconds)
 {
@@ -21,18 +23,25 @@ volatile int isMoving = 0;
 
 // Only accessed by perform movement thread for now
 // At global to be seen in debugger
-struct AxisValues axisValues;
+struct UartValues uartValues;
 struct MotorSpeed motorSpeed;
+volatile uint8_t button;
+
 void tBrain(void *argument)
 {
-	// Should instead send some value to motor thread
-	// which handles the movement
-	while (1)
-	{
-		axisValues = extractAxisValues();
-		motorSpeed = calculateSpeed(axisValues.x_axis, axisValues.y_axis);
-		moveAll(motorSpeed.leftSpeed, motorSpeed.rightSpeed);
-	}
+  // Should instead send some value to motor thread
+  // which handles the movement
+  while (1)
+  {
+    uartValues = extractUartValues();
+		button = uartValues.button;
+		if (button == 1)
+		{
+			setCourseEnded(true);
+		}
+    motorSpeed = calculateSpeed(uartValues.x_axis, uartValues.y_axis);
+    moveAll(motorSpeed.leftSpeed, motorSpeed.rightSpeed);
+  }
 }
 
 void tMotorControl(void *argument)
@@ -62,7 +71,7 @@ int turnOn = 1;
 void movingLEDThread(void *argument)
 {
 	int greenCounter = 0;
-	int onRed = 1;
+	int isRedOn = 1;
 	for (;;)
 	{
 		osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);
@@ -106,7 +115,7 @@ void tLED(void *argument)
 	tid_stationaryLEDThread = osThreadNew(stationaryLEDThread, NULL, NULL);
 	for (;;)
 	{
-		if (isMoving)
+		if (motorSpeed.leftSpeed != 0 || motorSpeed.rightSpeed != 0)
 		{
 			osThreadFlagsSet(tid_movingLEDThread, 0x0001);
 		}
@@ -117,8 +126,9 @@ void tLED(void *argument)
 	}
 }
 
-void tAudio(void *argument)
-{
+
+void tAudio(void* argument){
+	playBeginningTheme();
 }
 
 int main(void)
@@ -127,6 +137,7 @@ int main(void)
 	SystemCoreClockUpdate();
 	initPWM();
 	initLEDs();
+	initAudioPWM();
 	initUART2(BAUD_RATE);
 	osKernelInitialize(); // Initialize CMSIS-RTOS
 

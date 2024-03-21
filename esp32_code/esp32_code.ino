@@ -47,6 +47,7 @@ void notify()
   // 5-7: right/up
   // 1/7 fastest mode
 
+  int button_data = PS4.Circle();
   int x_data = PS4.LStickX();
   int y_data = PS4.LStickY();
 
@@ -85,7 +86,14 @@ void notify()
     y_output = 7;
   }
 
-  int combined_output = (x_output << 4) | y_output;
+  int combined_output = (button_data << 6) | (x_output << 3) | y_output;
+  // Serial.print(button_data);
+  // Serial.print(", ");
+  // Serial.print(x_output);
+  // Serial.print(", ");
+  // Serial.print(y_output);
+  // Serial.print(", ");
+  // Serial.println(combined_output);
   Serial2.write(combined_output);
 }
 
