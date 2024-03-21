@@ -19,52 +19,9 @@ const int greenLEDs[] = {GREEN_LED_0, GREEN_LED_1, GREEN_LED_2, GREEN_LED_3, GRE
  * Init functions
  *---------------------------------------------------------------------------*/
 
- void initPIT(void) {
-    // Enable clock to PIT module
-    SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;
-    // Enable module, freeze timers in debug mode
-    PIT->MCR &= ~PIT_MCR_MDIS_MASK;
-    PIT->MCR |= PIT_MCR_FRZ_MASK;
-    // Initialize PIT0 to count down from argument
-    // (0.25 * 48,000,000) - 1 = 11,999,999
-    PIT->CHANNEL[0].LDVAL = 11999999;
-    // No chaining
-    PIT->CHANNEL[0].TCTRL &= PIT_TCTRL_CHN_MASK;
-    // Generate interrupts
-    PIT->CHANNEL[0].TCTRL |= PIT_TCTRL_TIE_MASK;
-    /* Enable Interrupts */
-    NVIC_SetPriority(PIT_IRQn, 128); // 0, 64, 128 or 192
-    NVIC_ClearPendingIRQ(PIT_IRQn);
-    NVIC_EnableIRQ(PIT_IRQn);
- }
-
- void startPIT(void) {
-    // Enable counter
-    PIT->CHANNEL[0].TCTRL |= PIT_TCTRL_TEN_MASK;
- }
- void stopPIT(void) {
-    // Enable counter
-    PIT->CHANNEL[0].TCTRL &= ~PIT_TCTRL_TEN_MASK;
- }
-
-
-volatile int redPeriod = 0; // counts from 0-3, increments every 250ms
-
 int getRedPeriod(){
 	return redPeriod;
 }
-
-void PIT_IRQHandler(void) {
-
-    //clear pending IRQ
-    NVIC_ClearPendingIRQ(PIT_IRQn);
-    if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK) {
-        // clear status flag for timer channel 0
-        PIT->CHANNEL[0].TFLG &= PIT_TFLG_TIF_MASK;
-        redPeriod = (redPeriod + 1) % 4;
-    }
-}
-
 
  void initLEDsGPIO(void){
     // // IO PINS
@@ -85,21 +42,23 @@ void PIT_IRQHandler(void) {
  }
 
 void initLEDs(void){
-    // initPIT();
     initLEDsGPIO();
+		for (int i =0; i < NUM_LEDS; i ++){
+				ledControl(GREEN, turnOff, i);
+		}
 }
 
 // This function activates a single color of the RGB LED
 // of the FRDMKL25Z board
 // Note that the LEDS are active low
 void ledControl(color_t color, int turnOn, int position){
-	if(turnOn){
+	if(turnOn == 1){
 		switch(color){
 			case RED:
-				PTB->PDOR &= ~(unsigned int)MASK(RED_LED);
+				PTD->PDOR &= ~(unsigned int)MASK(RED_LED);
 				break;
 			case GREEN:
-				PTB->PDOR &= ~(unsigned int)MASK(greenLEDs[position]);
+				PTC->PDOR &= ~(unsigned int)MASK(greenLEDs[position]);
 				break;
 			case NONE:
 				break;
@@ -107,10 +66,10 @@ void ledControl(color_t color, int turnOn, int position){
 	}else{
 		switch(color){
 			case RED:
-				PTB->PDOR |= (unsigned int)MASK(RED_LED);
+				PTD->PDOR |= (unsigned int)MASK(RED_LED);
 				break;
 			case GREEN:
-				PTB->PDOR |= (unsigned int)MASK(greenLEDs[position]);
+				PTC->PDOR |= (unsigned int)MASK(greenLEDs[position]);
 				break;
 			case NONE:
 				break;

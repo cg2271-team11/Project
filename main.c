@@ -99,6 +99,7 @@ void tLED(void *argument)
 				ledControl(RED, turnOff, 0);
 			}
 		}
+		isMoving = finalMoving;
 	}
 }
 
@@ -193,6 +194,7 @@ int main(void)
 	// Initialization
 	SystemCoreClockUpdate();
 	initPWM();
+	initLEDs();
 	initUART2(BAUD_RATE);
 	osKernelInitialize(); // Initialize CMSIS-RTOS
 
