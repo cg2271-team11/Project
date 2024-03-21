@@ -1,89 +1,13 @@
+/**
+
+Function: Audio feature on the vehicle using piezo buzzer
+
+**/
+
 #include "MKL25Z4.h" 
+#include <stdbool.h>
+
 #define BUZZER_PIN 5 // TPM0_CH5 PORTC_PIN9
-//#define NOTE_C1 33
-//#define NOTE_C_SHARP_1 35
-//#define NOTE_D1 37
-//#define NOTE_D_SHARP_1 39
-//#define NOTE_E1 41
-//#define NOTE_F1 44
-//#define NOTE_F_SHARP_1 46
-//#define NOTE_G1 49
-//#define NOTE_G_SHARP_1 52
-//#define NOTE_A1 55
-//#define NOTE_A_SHARP_1 58
-//#define NOTE_B1 62
-//#define NOTE_C2 66
-//#define NOTE_C_SHARP_2 70
-//#define NOTE_D2 74
-//#define NOTE_D_SHARP_2 78
-//#define NOTE_E2 82
-//#define NOTE_F2 87
-//#define NOTE_F_SHARP_2 92
-//#define NOTE_G2 98
-//#define NOTE_G_SHARP_2 104
-//#define NOTE_A2 110
-//#define NOTE_A_SHARP_2 116
-//#define NOTE_B2 124
-//#define NOTE_C3 131
-//#define NOTE_C_SHARP_3 139
-//#define NOTE_D3 147
-//#define NOTE_D_SHARP_3 156
-//#define NOTE_E3 165
-//#define NOTE_F3 174
-//#define NOTE_F_SHARP_3 185
-//#define NOTE_G3 196
-//#define NOTE_G_SHARP_3 208
-//#define NOTE_A3 220
-//#define NOTE_A_SHARP_3 233
-//#define NOTE_B3 247
-//#define NOTE_C4 262
-//#define NOTE_C_SHARP_4 278
-//#define NOTE_D4 294
-//#define NOTE_D_SHARP_4 311
-//#define NOTE_E4 330
-//#define NOTE_F4 349
-//#define NOTE_F_SHARP_4 370
-//#define NOTE_G4 392
-//#define NOTE_G_SHARP_4 415
-//#define NOTE_A4 440
-//#define NOTE_A_SHARP_4 466
-//#define NOTE_B4 494
-//#define NOTE_C5 524
-//#define NOTE_C_SHARP_5 556
-//#define NOTE_D5 588
-//#define NOTE_D_SHARP_5 622
-//#define NOTE_E5 660
-//#define NOTE_F5 698
-//#define NOTE_F_SHARP_5 740
-//#define NOTE_G5 784
-//#define NOTE_G_SHARP_5 830
-//#define NOTE_A5 880
-//#define NOTE_A_SHARP_5 932
-//#define NOTE_B5 988
-//#define NOTE_C6 1048
-//#define NOTE_C_SHARP_6 1112
-//#define NOTE_D6 1176
-//#define NOTE_D_SHARP_6 1244
-//#define NOTE_E6 1320
-//#define NOTE_F6 1396
-//#define NOTE_F_SHARP_6 1480
-//#define NOTE_G6 1568
-//#define NOTE_G_SHARP_6 1660
-//#define NOTE_A6 1760
-//#define NOTE_A_SHARP_6 1864
-//#define NOTE_B6 1976
-//#define NOTE_C7 2096
-//#define NOTE_C_SHARP_7 2224
-//#define NOTE_D7 2352
-//#define NOTE_D_SHARP_7 2488
-//#define NOTE_E7 2640
-//#define NOTE_F7 2794
-//#define NOTE_F_SHARP_7 2960
-//#define NOTE_G7 3136
-//#define NOTE_G_SHARP_7 3320
-//#define NOTE_A7 3520
-//#define NOTE_A_SHARP_7 3728
-//#define NOTE_B7 3952
 #define B0 31
 #define C1 33
 #define CS1 35
@@ -173,4 +97,11 @@
 #define CS8 4435
 #define D8 4699
 #define DS8 4978
+
+
+static void delay(uint32_t milliseconds);
+
 void initAudioPWM(void);
+void setNote(uint32_t freq);
+void playBeginningTheme(bool courseEnded);
+void playEndingTheme(void);
