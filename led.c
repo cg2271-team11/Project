@@ -1,6 +1,6 @@
 #include "led.h"
 
-#define RED_LED 			4 // Port D Pin 4
+#define RED_LED     4 // Port D Pin 4
 #define GREEN_LED_0 7 // Port C Pin 7
 #define GREEN_LED_1 0 // Port C Pin 0
 #define GREEN_LED_2 3 // Port C Pin 3
@@ -9,7 +9,7 @@
 #define GREEN_LED_5 6 // Port C Pin 6
 #define GREEN_LED_6 10 // Port C Pin 10
 #define GREEN_LED_7 11 // Port C Pin 11
-#define MASK(x) 			(1 << (x))
+#define MASK(x) 	(1 << (x))
 
 
 const int greenLEDs[] = {GREEN_LED_0, GREEN_LED_1, GREEN_LED_2, GREEN_LED_3, GREEN_LED_4, GREEN_LED_5, GREEN_LED_6, GREEN_LED_7};
@@ -18,10 +18,6 @@ const int greenLEDs[] = {GREEN_LED_0, GREEN_LED_1, GREEN_LED_2, GREEN_LED_3, GRE
 /*----------------------------------------------------------------------------
  * Init functions
  *---------------------------------------------------------------------------*/
-
-int getRedPeriod(){
-	return redPeriod;
-}
 
  void initLEDsGPIO(void){
     // // IO PINS
@@ -43,9 +39,9 @@ int getRedPeriod(){
 
 void initLEDs(void){
     initLEDsGPIO();
-		for (int i =0; i < NUM_LEDS; i ++){
-				ledControl(GREEN, turnOff, i);
-		}
+	for (int i =0; i < NUM_LEDS; i ++){
+		ledControl(GREEN, turnOff, i);
+	}
 }
 
 // This function activates a single color of the RGB LED
