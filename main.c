@@ -54,74 +54,6 @@ void tMotorControl(void *argument)
  * Clock for timing the flashing
  **/
 
-void tLED(void *argument)
-{
-	int greenCounter = 0;
-	int turnOff = 0;
-	int turnOn = 1;
-	for (;;)
-	{
-		if (motorSpeed.leftSpeed != 0)
-		{
-			// Moving
-			// Turn on 1 green LED at a time
-			for (int i = 0; i < NUM_LEDS; i++)
-			{
-				ledControl(GREEN, turnOff, i);
-			}
-			ledControl(GREEN, turnOn, greenCounter);
-			greenCounter++;
-			// Toggle all red LEDs
-			if (redPeriod <= 1)
-			{
-				ledControl(RED, turnOn, 0);
-			}
-			else
-			{
-				ledControl(RED, turnOff, 0);
-			}
-		}
-		else
-		{
-			// Stationary
-			// Turn on all green LEDs
-			for (int i = 0; i < NUM_LEDS; i++)
-			{
-				ledControl(GREEN, turnOn, i);
-			}
-			// Turn on all red LEDs
-			if (redPeriod % 2)
-			{
-				ledControl(RED, turnOn, 0);
-			}
-			else
-			{
-				ledControl(RED, turnOff, 0);
-			}
-		}
-		isMoving = finalMoving;
-	}
-}
-
-void tMotorControl(void *argument)
-{
-}
-
-/**
- * LED thread
- * Requirements:
- * 1. Moving State
- *    a. The front 8-10 Green LED’s must be in a Running Mode (1 LED at a time)
- *    b. The rear 8-10 Red LED’s must be flashing continuously at a rate of 500ms ON, 500ms OFF
- * 2. Stationary State
- *    a. The front 8-10 Green LED’s must all be lighted up continuously
- *    b. The rear 8-10 Red LED’s must be flashing continuously at a rate of 250ms ON, 250ms OFF
- *
- * Dependencies:
- * State must be updated by the motor thread
- * Clock for timing the flashing
- **/
-
 osThreadId_t tid_movingLEDThread;
 osThreadId_t tid_stationaryLEDThread;
 
@@ -135,35 +67,35 @@ void movingLEDThread(void *argument)
 	{
 		osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);
 		// Moving
-		// Turn on 1 green LED at a time
 		for (int i = 0; i < NUM_LEDS; i++)
+		// Turn on 1 green LED at a time
 		{
 			ledControl(GREEN, turnOff, i);
 		}
 		ledControl(GREEN, turnOn, greenCounter);
-		greenCounter++;
+		greenCounter = greenCounter >= NUM_LEDS - 1 ? 0 : greenCounter + 1;
 		// Toggle all red LEDs
-		ledControl(RED, onRed, 0);
-		onRed = onRed == 1 ? 0 : 1;
+		ledControl(RED, isRedOn, 0);
+		isRedOn = isRedOn == 1 ? 0 : 1;
 		osDelay(500);
 	}
 }
 
 void stationaryLEDThread(void *argument)
 {
-	int onRed = 1;
+	int isRedOn = 1;
 	for (;;)
 	{
 		osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);
-		// Moving
-		// Turn on 1 green LED at a time
+		// Stationary
+		// Turn on all green
 		for (int i = 0; i < NUM_LEDS; i++)
 		{
 			ledControl(GREEN, turnOn, i);
 		}
 		// Toggle all red LEDs
-		ledControl(RED, onRed, 0);
-		onRed = onRed == 1 ? 0 : 1;
+		ledControl(RED, isRedOn, 0);
+		isRedOn = isRedOn == 1 ? 0 : 1;
 		osDelay(250);
 	}
 }
