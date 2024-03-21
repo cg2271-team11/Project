@@ -100,8 +100,9 @@ Function: Audio feature on the vehicle using piezo buzzer
 
 
 static void delay(uint32_t milliseconds);
+void setCourseEnded(bool updatedCourseEnded);
 
 void initAudioPWM(void);
 void setNote(uint32_t freq);
-void playBeginningTheme(bool courseEnded);
+void playBeginningTheme(void);
 void playEndingTheme(void);

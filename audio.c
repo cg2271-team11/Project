@@ -8,6 +8,11 @@ static void delay(uint32_t milliseconds) {
 	}
 }
 
+volatile bool courseEnded = false;
+
+void setCourseEnded(bool updatedCourseEnded){
+	courseEnded = updatedCourseEnded;
+}
 void initAudioPWM(void) {
 	// Enable clock gating to port C module
 	SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
@@ -59,11 +64,11 @@ void playEndingTheme(void) {
 const int CD = 600;
 	uint32_t endingMelody[] = {
 			C4,E4,G4,C5,E5,G5,E5,0,C4,DS4,GS4,C5,DS5,GS5,E5,0,
-			D4,F4,AS4,D5,F5,AS5,AS5,AS5,AS5,C6
+			D4,F4,AS4,D5,F5,AS5,AS5,AS5,AS5,C6,0
 	};
 
 	uint32_t endingNoteDurations[] = {
-		CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/2,CD,CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/2,CD,CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/3,CD/3,CD/3,CD * 4
+		CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/2,CD,CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/2,CD,CD/3,CD/3,CD/3,CD/3,CD/3,CD,CD/3,CD/3,CD/3,CD * 4,CD
 	};
 	int endingNotes = sizeof(endingMelody) / sizeof(endingMelody[0]);
 	for (int thisNote = 0; thisNote < endingNotes; thisNote++) {
@@ -74,7 +79,7 @@ const int CD = 600;
 	}
 }
 
-void playBeginningTheme(bool courseEnded) {
+void playBeginningTheme() {
 	uint32_t beginningMelody[] = {
     E4, E4, 0, E4, 0, C4, E4, 0, G4, 0, 0,  G3, 0, 0, 0,
     C4, 0, 0, G3, 0, 0, E3, 0, 0, A3, 0, B3, 0, AS3, A3, 0,
@@ -94,6 +99,10 @@ void playBeginningTheme(bool courseEnded) {
 	while (!courseEnded) {
 		int beginningNotes = sizeof(beginningMelody) / sizeof(beginningMelody[0]);
 		for (int thisNote = 0; thisNote < beginningNotes; thisNote++) {
+			if (courseEnded)
+			{
+				break;
+			}
 			// To play a note, set the PWM frequency to the note's frequency
 			setNote(beginningMelody[thisNote]);
 			// To simulate the note's duration, wait for the duration, then stop.

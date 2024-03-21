@@ -26,7 +26,6 @@ volatile int isMoving = 0;
 struct UartValues uartValues;
 struct MotorSpeed motorSpeed;
 volatile uint8_t button;
-bool courseEnded = false;
 
 void tBrain(void *argument)
 {
@@ -36,6 +35,10 @@ void tBrain(void *argument)
   {
     uartValues = extractUartValues();
 		button = uartValues.button;
+		if (button == 1)
+		{
+			setCourseEnded(true);
+		}
     motorSpeed = calculateSpeed(uartValues.x_axis, uartValues.y_axis);
     moveAll(motorSpeed.leftSpeed, motorSpeed.rightSpeed);
   }
@@ -68,7 +71,7 @@ int turnOn = 1;
 void movingLEDThread(void *argument)
 {
 	int greenCounter = 0;
-	int onRed = 1;
+	int isRedOn = 1;
 	for (;;)
 	{
 		osThreadFlagsWait(0x0001, osFlagsWaitAny, osWaitForever);
@@ -112,7 +115,7 @@ void tLED(void *argument)
 	tid_stationaryLEDThread = osThreadNew(stationaryLEDThread, NULL, NULL);
 	for (;;)
 	{
-		if (isMoving)
+		if (motorSpeed.leftSpeed != 0 || motorSpeed.rightSpeed != 0)
 		{
 			osThreadFlagsSet(tid_movingLEDThread, 0x0001);
 		}
@@ -125,7 +128,7 @@ void tLED(void *argument)
 
 
 void tAudio(void* argument){
-	playBeginningTheme(courseEnded);
+	playBeginningTheme();
 }
 
 int main(void)

@@ -41,7 +41,7 @@ void initLEDs(void)
 	initLEDsGPIO();
 	for (int i = 0; i < NUM_LEDS; i++)
 	{
-		ledControl(GREEN, turnOff, i);
+		ledControl(GREEN, 0, i);
 	}
 }
 

@@ -467,6 +467,8 @@
               <FileName>led.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\led.c</FilePath>
+            </File>
+            <File>
               <FileName>audio.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\audio.c</FilePath>
