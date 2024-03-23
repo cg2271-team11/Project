@@ -1,4 +1,5 @@
 #include "uart.h"
+#include <stdbool.h>
 
 void initUART2(uint32_t baud_rate)
 {
@@ -30,21 +31,20 @@ void initUART2(uint32_t baud_rate)
   UART2->C2 |= ((UART_C2_TE_MASK) | (UART_C2_RE_MASK) | (UART_C2_RIE_MASK));
 }
 
-volatile uint8_t rx_data = 0;
+// Initialize to 0b00100100 as this represents no button press, no movement on x or y axis
+volatile uint8_t rx_data = 0x24;
 
 void UART2_IRQHandler(void)
 {
   NVIC_ClearPendingIRQ(UART2_IRQn);
   if (UART2->S1 & UART_S1_RDRF_MASK)
   {
-    rx_data = UART2->D;
+		rx_data = UART2->D;
   }
 }
 
 struct UartValues extractUartValues()
 {
-  // rx_data = UART2_Receive_Poll();
-
   struct UartValues values;
 	values.button = (rx_data >> 6) & 0x01; // Extract button value
   values.x_axis = (rx_data >> 3) & 0x07; // Extract x-axis value
