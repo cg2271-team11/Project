@@ -39,6 +39,7 @@ void UART2_IRQHandler(void)
   NVIC_ClearPendingIRQ(UART2_IRQn);
   if (UART2->S1 & UART_S1_RDRF_MASK)
   {
+		// Ignore first data received as it might be from a prior run
 		if(isFirstData){
 			uint8_t dummy = UART2->D;
 			isFirstData = false;
