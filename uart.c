@@ -31,15 +31,20 @@ void initUART2(uint32_t baud_rate)
   UART2->C2 |= ((UART_C2_TE_MASK) | (UART_C2_RE_MASK) | (UART_C2_RIE_MASK));
 }
 
-// Initialize to 0b00100100 as this represents no button press, no movement on x or y axis
-volatile uint8_t rx_data = 0x24;
+volatile uint8_t rx_data = 0;
+bool isFirstData = true;
 
 void UART2_IRQHandler(void)
 {
   NVIC_ClearPendingIRQ(UART2_IRQn);
   if (UART2->S1 & UART_S1_RDRF_MASK)
   {
-		rx_data = UART2->D;
+		if(isFirstData){
+			uint8_t dummy = UART2->D;
+			isFirstData = false;
+		}else{
+			rx_data = UART2->D;
+		}
   }
 }
 
