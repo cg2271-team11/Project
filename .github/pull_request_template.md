@@ -5,6 +5,7 @@
 * Added Readme
 
 ## Proposed commit message
+Refer to appropriate [git conventions](https://se-education.org/guides/conventions/git.html)
 ```
 (Wrap lines at 72 characters)
 ```
