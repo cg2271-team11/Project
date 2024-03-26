@@ -115,17 +115,10 @@ void notify()
   }
 
   int combinedOutput = (buttonData << 6) | (xOutput << 3) | yOutput;
-  // Serial.print(buttonData);
-  // Serial.print(", ");
-  // Serial.print(xOutput);
-  // Serial.print(", ");
-  // Serial.print(yOutput);
-  // Serial.print(", ");
-  // Serial.println(combinedOutput);
   if (previousVal != combinedOutput)
   {
     previousVal = combinedOutput;
-    Serial.print(combinedOutput);
+    // Serial.print(combinedOutput);
     Serial2.write(combinedOutput);
   }
 }
