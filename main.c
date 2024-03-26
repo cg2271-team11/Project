@@ -18,51 +18,6 @@ static void delay(uint32_t milliseconds)
 	}
 }
 
-// 0 = Stationary, 1 = Moving
-volatile int isMoving = 0;
-
-// Only accessed by perform movement thread for now
-// At global to be seen in debugger
-struct UartValues uartValues;
-struct MotorSpeed motorSpeed;
-volatile uint8_t button;
-
-void tBrain(void *argument)
-{
-  // Should instead send some value to motor thread
-  // which handles the movement
-  while (1)
-  {
-    uartValues = extractUartValues();
-		button = uartValues.button;
-		if (button == 1)
-		{
-			setCourseEnded(true);
-		}
-    motorSpeed = calculateSpeed(uartValues.x_axis, uartValues.y_axis);
-    moveAll(motorSpeed.leftSpeed, motorSpeed.rightSpeed);
-  }
-}
-
-void tMotorControl(void *argument)
-{
-}
-
-/**
- * LED thread
- * Requirements:
- * 1. Moving State
- *    a. The front 8-10 Green LED’s must be in a Running Mode (1 LED at a time)
- *    b. The rear 8-10 Red LED’s must be flashing continuously at a rate of 500ms ON, 500ms OFF
- * 2. Stationary State
- *    a. The front 8-10 Green LED’s must all be lighted up continuously
- *    b. The rear 8-10 Red LED’s must be flashing continuously at a rate of 250ms ON, 250ms OFF
- *
- * Dependencies:
- * State must be updated by the motor thread
- * Clock for timing the flashing
- **/
-
 osThreadId_t tid_movingLEDThread;
 osThreadId_t tid_stationaryLEDThread;
 
@@ -109,13 +64,31 @@ void stationaryLEDThread(void *argument)
 	}
 }
 
-void tLED(void *argument)
+// 0 = Stationary, 1 = Moving
+volatile int isMoving = 0;
+osMessageQueueId_t uartValuesMessageQueue;
+
+void tBrain(void *argument)
 {
+	UartValues_t myUartData;
+		
 	tid_movingLEDThread = osThreadNew(movingLEDThread, NULL, NULL);
 	tid_stationaryLEDThread = osThreadNew(stationaryLEDThread, NULL, NULL);
-	for (;;)
-	{
-		if (motorSpeed.leftSpeed != 0 || motorSpeed.rightSpeed != 0)
+	
+  while (1)
+  {
+    myUartData = extractUartValues();
+		
+		osMessageQueuePut(uartValuesMessageQueue, &myUartData, NULL, 0);
+		
+		uint8_t button = myUartData.button;
+		
+		if (button == 1)
+		{
+			setCourseEnded(true);
+		}
+		
+		if (myUartData.x_axis != 4 || myUartData.y_axis != 4)
 		{
 			osThreadFlagsSet(tid_movingLEDThread, 0x0001);
 		}
@@ -123,7 +96,40 @@ void tLED(void *argument)
 		{
 			osThreadFlagsSet(tid_stationaryLEDThread, 0x0001);
 		}
-	}
+  }
+}
+
+void tMotorControl(void *argument)
+{
+		UartValues_t myUartData;
+		for (;;) {
+			osMessageQueueGet(uartValuesMessageQueue, &myUartData, NULL, osWaitForever);
+			struct MotorSpeed motorSpeed = calculateSpeed(myUartData.x_axis, myUartData.y_axis);
+			moveAll(motorSpeed.leftSpeed, motorSpeed.rightSpeed);		
+		}
+
+}
+
+/**
+ * LED thread
+ * Requirements:
+ * 1. Moving State
+ *    a. The front 8-10 Green LED’s must be in a Running Mode (1 LED at a time)
+ *    b. The rear 8-10 Red LED’s must be flashing continuously at a rate of 500ms ON, 500ms OFF
+ * 2. Stationary State
+ *    a. The front 8-10 Green LED’s must all be lighted up continuously
+ *    b. The rear 8-10 Red LED’s must be flashing continuously at a rate of 250ms ON, 250ms OFF
+ *
+ * Dependencies:
+ * State must be updated by the motor thread
+ * Clock for timing the flashing
+ **/
+
+
+
+void tLED(void *argument)
+{
+	
 }
 
 
@@ -142,9 +148,10 @@ int main(void)
 	osKernelInitialize(); // Initialize CMSIS-RTOS
 
 	// Threads
+	uartValuesMessageQueue = osMessageQueueNew(1, sizeof(UartValues_t), NULL);
 	osThreadNew(tBrain, NULL, NULL);
 	osThreadNew(tMotorControl, NULL, NULL);
-	osThreadNew(tLED, NULL, NULL);
+	// osThreadNew(tLED, NULL, NULL);
 	osThreadNew(tAudio, NULL, NULL);
 	osKernelStart();
 }

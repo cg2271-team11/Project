@@ -13,11 +13,11 @@ uint8_t UART2_Receive_Poll(void);
 // 4: nothing
 // 5-7: right/up
 // 1/7 fastest mode
-struct UartValues
+typedef struct
 {
 	uint8_t button;
   uint8_t x_axis;
   uint8_t y_axis;
-};
+}UartValues_t;
 
-struct UartValues extractUartValues();
+UartValues_t extractUartValues();
