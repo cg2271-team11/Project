@@ -5,36 +5,38 @@
 
 unsigned long lastTimeStamp = 0;
 
+int previousVal = 0;
+
 void notify()
 {
   char messageString[200];
   sprintf(messageString, "%4d,%4d,%4d,%4d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d,%3d",
-  PS4.LStickX(),
-  PS4.LStickY(),
-  PS4.RStickX(),
-  PS4.RStickY(),
-  PS4.Left(),
-  PS4.Down(),
-  PS4.Right(),
-  PS4.Up(),
-  PS4.Square(),
-  PS4.Cross(),
-  PS4.Circle(),
-  PS4.Triangle(),
-  PS4.L1(),
-  PS4.R1(),
-  PS4.L2(),
-  PS4.R2(),  
-  PS4.Share(),
-  PS4.Options(),
-  PS4.PSButton(),
-  PS4.Touchpad(),
-  PS4.Charging(),
-  PS4.Audio(),
-  PS4.Mic(),
-  PS4.Battery());
+          PS4.LStickX(),
+          PS4.LStickY(),
+          PS4.RStickX(),
+          PS4.RStickY(),
+          PS4.Left(),
+          PS4.Down(),
+          PS4.Right(),
+          PS4.Up(),
+          PS4.Square(),
+          PS4.Cross(),
+          PS4.Circle(),
+          PS4.Triangle(),
+          PS4.L1(),
+          PS4.R1(),
+          PS4.L2(),
+          PS4.R2(),
+          PS4.Share(),
+          PS4.Options(),
+          PS4.PSButton(),
+          PS4.Touchpad(),
+          PS4.Charging(),
+          PS4.Audio(),
+          PS4.Mic(),
+          PS4.Battery());
 
-  //Only needed to print the message properly on serial monitor. Else we dont need it.
+  // Only needed to print the message properly on serial monitor. Else we dont need it.
   if (millis() - lastTimeStamp > 50)
   {
     Serial.println(messageString);
@@ -54,35 +56,61 @@ void notify()
   int x_output;
   int y_output;
 
-  if (x_data <= -97) {
+  if (x_data <= -97)
+  {
     x_output = 1;
-  } else if (x_data >= -96 && x_data <= -65) {
+  }
+  else if (x_data >= -96 && x_data <= -65)
+  {
     x_output = 2;
-  } else if (x_data >= -64 && x_data <= -33) {
+  }
+  else if (x_data >= -64 && x_data <= -33)
+  {
     x_output = 3;
-  } else if (x_data >= -32 && x_data <= 32) {
+  }
+  else if (x_data >= -32 && x_data <= 32)
+  {
     x_output = 4;
-  } else if (x_data >= 33 && x_data <= 64) {
+  }
+  else if (x_data >= 33 && x_data <= 64)
+  {
     x_output = 5;
-  } else if (x_data >= 65 && x_data <= 96) {
+  }
+  else if (x_data >= 65 && x_data <= 96)
+  {
     x_output = 6;
-  } else if (x_data >= 97) {
+  }
+  else if (x_data >= 97)
+  {
     x_output = 7;
   }
 
-  if (y_data <= -97) {
+  if (y_data <= -97)
+  {
     y_output = 1;
-  } else if (y_data >= -96 && y_data <= -65) {
+  }
+  else if (y_data >= -96 && y_data <= -65)
+  {
     y_output = 2;
-  } else if (y_data >= -64 && y_data <= -33) {
+  }
+  else if (y_data >= -64 && y_data <= -33)
+  {
     y_output = 3;
-  } else if (y_data >= -32 && y_data <= 32) {
+  }
+  else if (y_data >= -32 && y_data <= 32)
+  {
     y_output = 4;
-  } else if (y_data >= 33 && y_data <= 64) {
+  }
+  else if (y_data >= 33 && y_data <= 64)
+  {
     y_output = 5;
-  } else if (y_data >= 65 && y_data <= 96) {
+  }
+  else if (y_data >= 65 && y_data <= 96)
+  {
     y_output = 6;
-  } else if (y_data >= 97) {
+  }
+  else if (y_data >= 97)
+  {
     y_output = 7;
   }
 
@@ -94,7 +122,12 @@ void notify()
   // Serial.print(y_output);
   // Serial.print(", ");
   // Serial.println(combined_output);
-  Serial2.write(combined_output);
+  if (previousVal != combined_output)
+  {
+    previousVal = combined_output;
+    Serial.print(combined_output);
+    Serial2.write(combined_output);
+  }
 }
 
 void onConnect()
@@ -104,10 +137,10 @@ void onConnect()
 
 void onDisConnect()
 {
-  Serial.println("Disconnected!.");    
+  Serial.println("Disconnected!.");
 }
 
-void setup() 
+void setup()
 {
   Serial.begin(115200);
   PS4.attach(notify);
@@ -119,7 +152,6 @@ void setup()
   Serial2.begin(9600, SERIAL_8N1, RXD2, TXD2);
 }
 
-void loop() 
+void loop()
 {
-
 }
