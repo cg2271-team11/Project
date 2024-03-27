@@ -24,8 +24,8 @@ void initPWM(void)
 	SIM_SOPT2 |= SIM_SOPT2_TPMSRC(1); // MCGFLLCLK or MCGPLLCLK/2
 
 	// Set Modulo Value 48000000 / 128 = 375000 / 7500 = 50 Hz
-	TPM1->MOD = 3750;
-	TPM2->MOD = 3750;
+	TPM1->MOD = 7499;
+	TPM2->MOD = 7499;
 
 	// Enabling of Center Aligned PWM - Lower EMI and Reduced current ripple compared to edge-aligned
 	TPM1->SC |= TPM_SC_CPWMS_MASK;
@@ -136,31 +136,31 @@ struct MotorSpeed calculateSpeed(uint8_t x_axis, uint8_t y_axis)
 {
 	struct MotorSpeed motorSpeed;
 
-	const int16_t modifier = 1100;
+	const int16_t modifier = 2200;
 
 	int16_t speed = 0;
 	switch (y_axis)
 	{
 	case 0x01:
-		speed = -3750;
+		speed = -7500;
 		break;
 	case 0x02:
-		speed = -2500;
+		speed = -5000;
 		break;
 	case 0x03:
-		speed = -1250;
+		speed = -2500;
 		break;
 	case 0x04:
 		speed = 0;
 		break;
 	case 0x05:
-		speed = 1250;
-		break;
-	case 0x06:
 		speed = 2500;
 		break;
+	case 0x06:
+		speed = 5000;
+		break;
 	case 0x07:
-		speed = 3750;
+		speed = 7500;
 		break;
 	}
 
@@ -224,30 +224,30 @@ struct MotorSpeed calculateSpeed(uint8_t x_axis, uint8_t y_axis)
 		switch (x_axis)
 		{
 		case 0x01:
-			motorSpeed.leftSpeed -= 3 * 1250;
-			motorSpeed.rightSpeed += 3 * 1250;
+			motorSpeed.leftSpeed -= 3 * 2500;
+			motorSpeed.rightSpeed += 3 * 2500;
 			break;
 		case 0x02:
-			motorSpeed.leftSpeed -= 2 * 1250;
-			motorSpeed.rightSpeed += 2 * 1250;
+			motorSpeed.leftSpeed -= 2 * 2500;
+			motorSpeed.rightSpeed += 2 * 2500;
 			break;
 		case 0x03:
-			motorSpeed.leftSpeed -= 1 * 1250;
-			motorSpeed.rightSpeed += 1 * 1250;
+			motorSpeed.leftSpeed -= 1 * 2500;
+			motorSpeed.rightSpeed += 1 * 2500;
 			break;
 		case 0x04:
 			break;
 		case 0x05:
-			motorSpeed.leftSpeed += 1 * 1250;
-			motorSpeed.rightSpeed -= 1 * 1250;
+			motorSpeed.leftSpeed += 1 * 2500;
+			motorSpeed.rightSpeed -= 1 * 2500;
 			break;
 		case 0x06:
-			motorSpeed.leftSpeed += 2 * 1250;
-			motorSpeed.rightSpeed -= 2 * 1250;
+			motorSpeed.leftSpeed += 2 * 2500;
+			motorSpeed.rightSpeed -= 2 * 2500;
 			break;
 		case 0x07:
-			motorSpeed.leftSpeed += 3 * 1250;
-			motorSpeed.rightSpeed -= 3 * 1250;
+			motorSpeed.leftSpeed += 3 * 2500;
+			motorSpeed.rightSpeed -= 3 * 2500;
 			break;
 		}
 	}
