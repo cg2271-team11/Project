@@ -49,9 +49,9 @@ void UART2_IRQHandler(void)
   }
 }
 
-struct UartValues extractUartValues()
+UartValues_t extractUartValues()
 {
-  struct UartValues values;
+  UartValues_t values;
 	values.button = (rx_data >> 6) & 0x01; // Extract button value
   values.x_axis = (rx_data >> 3) & 0x07; // Extract x-axis value
   values.y_axis = rx_data & 0x07;        // Extract y-axis value
