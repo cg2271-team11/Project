@@ -100,11 +100,139 @@ void moveAll(int16_t leftSpeed, int16_t rightSpeed)
 	}
 }
 
+
+
 struct MotorSpeed calculateSpeed(uint8_t x_axis, uint8_t y_axis)
 {
 	struct MotorSpeed motorSpeed;
 
 	const int16_t modifier = 2200;
+
+
+	int16_t speed = 0;
+	switch (y_axis)
+	{
+	case 0x01:
+		speed = -7500;
+		break;
+	case 0x02:
+		speed = -5000;
+		break;
+	case 0x03:
+		speed = 0;
+		break;
+	case 0x04:
+		speed = 0;
+		break;
+	case 0x05:
+		speed = 5000;
+		break;
+	case 0x06:
+		speed = 7500;
+		break;
+	case 0x07:
+		speed = 7500;
+		break;
+	}
+
+	motorSpeed.leftSpeed = speed;
+	motorSpeed.rightSpeed = speed;
+
+	if (speed > 0)
+	{
+		switch (x_axis)
+		{
+		case 0x01:
+			motorSpeed.leftSpeed -= 3 * modifier;
+			break;
+		case 0x02:
+			motorSpeed.leftSpeed -= 2 * modifier;
+			break;
+		case 0x03:
+			motorSpeed.leftSpeed -= 1 * modifier;
+			break;
+		case 0x04:
+			break;
+		case 0x05:
+			motorSpeed.rightSpeed -= 1 * modifier;
+			break;
+		case 0x06:
+			motorSpeed.rightSpeed -= 2 * modifier;
+			break;
+		case 0x07:
+			motorSpeed.rightSpeed -= 3 * modifier;
+			break;
+		}
+	}
+	else if (speed < 0)
+	{
+		switch (x_axis)
+		{
+		case 0x01:
+			motorSpeed.leftSpeed += 3 * modifier;
+			break;
+		case 0x02:
+			motorSpeed.leftSpeed += 2 * modifier;
+			break;
+		case 0x03:
+			motorSpeed.leftSpeed += 1 * modifier;
+			break;
+		case 0x04:
+			break;
+		case 0x05:
+			motorSpeed.rightSpeed += 1 * modifier;
+			break;
+		case 0x06:
+			motorSpeed.rightSpeed += 2 * modifier;
+			break;
+		case 0x07:
+			motorSpeed.rightSpeed += 3 * modifier;
+			break;
+		}
+	}
+	else
+	{
+		switch (x_axis)
+		{
+		case 0x01:
+			motorSpeed.leftSpeed -= 2 * 2500;
+			motorSpeed.rightSpeed += 2* 2500;
+			break;
+		case 0x02:
+			motorSpeed.leftSpeed -= 1.5 * 2500;
+			motorSpeed.rightSpeed += 1.5 * 2500;
+			break;
+		case 0x03:
+			motorSpeed.leftSpeed -= 1 * 2500;
+			motorSpeed.rightSpeed += 1 * 2500;
+			break;
+		case 0x04:
+			break;
+		case 0x05:
+			motorSpeed.leftSpeed += 1 * 2500;
+			motorSpeed.rightSpeed -= 1 * 2500;
+			break;
+		case 0x06:
+			motorSpeed.leftSpeed += 1.5 * 2500;
+			motorSpeed.rightSpeed -= 1.5 * 2500;
+			break;
+		case 0x07:
+			motorSpeed.leftSpeed += 2 * 2500;
+			motorSpeed.rightSpeed -= 2 * 2500;
+			break;
+		}
+	}
+
+	return motorSpeed;
+}
+
+
+struct MotorSpeed prototypeCalculateSpeed(uint8_t x_axis, uint8_t y_axis)
+{
+	struct MotorSpeed motorSpeed;
+
+	const int16_t modifier = 1000;
+
 
 	int16_t speed = 0;
 	switch (y_axis)
@@ -140,7 +268,7 @@ struct MotorSpeed calculateSpeed(uint8_t x_axis, uint8_t y_axis)
 		switch (x_axis)
 		{
 		case 0x01:
-			motorSpeed.leftSpeed -= 3 * modifier;
+			motorSpeed.leftSpeed -= 3 * modifier; // max 7500, start from 5500
 			break;
 		case 0x02:
 			motorSpeed.leftSpeed -= 2 * modifier;
@@ -151,7 +279,7 @@ struct MotorSpeed calculateSpeed(uint8_t x_axis, uint8_t y_axis)
 		case 0x04:
 			break;
 		case 0x05:
-			motorSpeed.rightSpeed -= 1 * modifier;
+			motorSpeed.rightSpeed -= 1 * modifier; 
 			break;
 		case 0x06:
 			motorSpeed.rightSpeed -= 2 * modifier;
