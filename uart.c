@@ -31,7 +31,8 @@ void initUART2(uint32_t baud_rate)
   UART2->C2 |= ((UART_C2_TE_MASK) | (UART_C2_RE_MASK) | (UART_C2_RIE_MASK));
 }
 
-volatile uint8_t rx_data = 0;
+// initialise rx_data to the stationary position so that LED state will be correct
+volatile uint8_t rx_data = (0x04 << 3) | (0x04); 
 bool isFirstData = true;
 
 void UART2_IRQHandler(void)

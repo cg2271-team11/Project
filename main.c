@@ -144,7 +144,6 @@ int main(void)
   uartValuesMessageQueue = osMessageQueueNew(1, sizeof(UartValues_t), NULL);
   osThreadNew(tBrain, NULL, NULL);
   osThreadNew(tMotorControl, NULL, NULL);
-  // osThreadNew(tLED, NULL, NULL);
   osThreadNew(tAudio, NULL, NULL);
   osKernelStart();
 }
