@@ -8,16 +8,6 @@
 #include "cmsis_os2.h"
 #include <stdbool.h>
 
-static void delay(uint32_t milliseconds)
-{
-  volatile uint32_t nof = milliseconds * 4800;
-  while (nof != 0)
-  {
-    __asm("NOP");
-    nof--;
-  }
-}
-
 osThreadId_t tid_movingLEDThread;
 osThreadId_t tid_stationaryLEDThread;
 
@@ -144,7 +134,6 @@ int main(void)
   uartValuesMessageQueue = osMessageQueueNew(1, sizeof(UartValues_t), NULL);
   osThreadNew(tBrain, NULL, NULL);
   osThreadNew(tMotorControl, NULL, NULL);
-  // osThreadNew(tLED, NULL, NULL);
   osThreadNew(tAudio, NULL, NULL);
   osKernelStart();
 }

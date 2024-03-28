@@ -8,8 +8,6 @@ void initUART2(uint32_t baud_rate)
   SIM->SCGC4 |= SIM_SCGC4_UART2_MASK;
   SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK;
 
-  // PORTE->PCR[UART_TX_PORTE22] &= ~PORT_PCR_MUX_MASK;
-  // PORTE->PCR[UART_TX_PORTE22] |= PORT_PCR_MUX(4);
   PORTE->PCR[UART_RX_PORTE23] &= ~PORT_PCR_MUX_MASK;
   PORTE->PCR[UART_RX_PORTE23] |= PORT_PCR_MUX(4);
 
@@ -31,7 +29,8 @@ void initUART2(uint32_t baud_rate)
   UART2->C2 |= ((UART_C2_TE_MASK) | (UART_C2_RE_MASK) | (UART_C2_RIE_MASK));
 }
 
-volatile uint8_t rx_data = 0;
+// initialise rx_data to the stationary position so that LED state will be correct
+volatile uint8_t rx_data = (0x04 << 3) | (0x04); 
 bool isFirstData = true;
 
 void UART2_IRQHandler(void)

@@ -24,8 +24,8 @@ void initPWM(void)
 	SIM_SOPT2 |= SIM_SOPT2_TPMSRC(1); // MCGFLLCLK or MCGPLLCLK/2
 
 	// Set Modulo Value 48000000 / 128 = 375000 / 7500 = 50 Hz
-	TPM1->MOD = 3750;
-	TPM2->MOD = 3750;
+	TPM1->MOD = 7499;
+	TPM2->MOD = 7499;
 
 	// Enabling of Center Aligned PWM - Lower EMI and Reduced current ripple compared to edge-aligned
 	TPM1->SC |= TPM_SC_CPWMS_MASK;
@@ -69,38 +69,6 @@ void stopMotor(void)
 	TPM2_C1V = 0; // RIGHT_BACK_W
 }
 
-void move(uint16_t speed)
-{
-	TPM1_C0V = speed; // LEFT_FRONT_W
-	// TPM1_C1V = 0; 		// LEFT_BACK_W
-	TPM2_C0V = speed; // RIGHT_FRONT_W
-					  // TPM2_C1V = 0; 		// RIGHT_BACK_W
-}
-
-void reverse(uint16_t speed)
-{
-	// TPM1_C0V = 0;// LEFT_FRONT_W
-	TPM1_C1V = speed; // LEFT_BACK_W
-	// TPM2_C0V = 0;  // RIGHT_FRONT_W
-	TPM2_C1V = speed; // RIGHT_BACK_W
-}
-
-void goLeft(uint16_t speed)
-{
-	// TPM1_C0V = 0; 	// LEFT_FRONT_W
-	// TPM1_C1V = 0; 		// LEFT_BACK_W
-	TPM2_C0V = speed; // RIGHT_FRONT_W
-					  // TPM2_C1V = 0; 		// RIGHT_BACK_W
-}
-
-void goRight(uint16_t speed)
-{
-	TPM1_C0V = speed; // LEFT_FRONT_W
-					  // TPM1_C1V = 0; 		// LEFT_BACK_W
-					  // TPM2_C0V = 0;  // RIGHT_FRONT_W
-					  // TPM2_C1V = 0; 		// RIGHT_BACK_W
-}
-
 void moveAll(int16_t leftSpeed, int16_t rightSpeed)
 {
 	if (leftSpeed == 0)
@@ -132,35 +100,38 @@ void moveAll(int16_t leftSpeed, int16_t rightSpeed)
 	}
 }
 
+
+
 struct MotorSpeed calculateSpeed(uint8_t x_axis, uint8_t y_axis)
 {
 	struct MotorSpeed motorSpeed;
 
-	const int16_t modifier = 1100;
+	const int16_t modifier = 2200;
+
 
 	int16_t speed = 0;
 	switch (y_axis)
 	{
 	case 0x01:
-		speed = -3750;
+		speed = -7500;
 		break;
 	case 0x02:
-		speed = -2500;
+		speed = -5000;
 		break;
 	case 0x03:
-		speed = -1250;
+		speed = 0;
 		break;
 	case 0x04:
 		speed = 0;
 		break;
 	case 0x05:
-		speed = 1250;
+		speed = 5000;
 		break;
 	case 0x06:
-		speed = 2500;
+		speed = 7500;
 		break;
 	case 0x07:
-		speed = 3750;
+		speed = 7500;
 		break;
 	}
 
@@ -224,30 +195,155 @@ struct MotorSpeed calculateSpeed(uint8_t x_axis, uint8_t y_axis)
 		switch (x_axis)
 		{
 		case 0x01:
-			motorSpeed.leftSpeed -= 3 * 1250;
-			motorSpeed.rightSpeed += 3 * 1250;
+			motorSpeed.leftSpeed -= 2 * 2500;
+			motorSpeed.rightSpeed += 2* 2500;
 			break;
 		case 0x02:
-			motorSpeed.leftSpeed -= 2 * 1250;
-			motorSpeed.rightSpeed += 2 * 1250;
+			motorSpeed.leftSpeed -= 1.5 * 2500;
+			motorSpeed.rightSpeed += 1.5 * 2500;
 			break;
 		case 0x03:
-			motorSpeed.leftSpeed -= 1 * 1250;
-			motorSpeed.rightSpeed += 1 * 1250;
+			motorSpeed.leftSpeed -= 1 * 2500;
+			motorSpeed.rightSpeed += 1 * 2500;
 			break;
 		case 0x04:
 			break;
 		case 0x05:
-			motorSpeed.leftSpeed += 1 * 1250;
-			motorSpeed.rightSpeed -= 1 * 1250;
+			motorSpeed.leftSpeed += 1 * 2500;
+			motorSpeed.rightSpeed -= 1 * 2500;
 			break;
 		case 0x06:
-			motorSpeed.leftSpeed += 2 * 1250;
-			motorSpeed.rightSpeed -= 2 * 1250;
+			motorSpeed.leftSpeed += 1.5 * 2500;
+			motorSpeed.rightSpeed -= 1.5 * 2500;
 			break;
 		case 0x07:
-			motorSpeed.leftSpeed += 3 * 1250;
-			motorSpeed.rightSpeed -= 3 * 1250;
+			motorSpeed.leftSpeed += 2 * 2500;
+			motorSpeed.rightSpeed -= 2 * 2500;
+			break;
+		}
+	}
+
+	return motorSpeed;
+}
+
+
+struct MotorSpeed prototypeCalculateSpeed(uint8_t x_axis, uint8_t y_axis)
+{
+	struct MotorSpeed motorSpeed;
+
+	const int16_t modifier = 1000;
+
+
+	int16_t speed = 0;
+	switch (y_axis)
+	{
+	case 0x01:
+		speed = -7500;
+		break;
+	case 0x02:
+		speed = -5000;
+		break;
+	case 0x03:
+		speed = -2500;
+		break;
+	case 0x04:
+		speed = 0;
+		break;
+	case 0x05:
+		speed = 2500;
+		break;
+	case 0x06:
+		speed = 5000;
+		break;
+	case 0x07:
+		speed = 7500;
+		break;
+	}
+
+	motorSpeed.leftSpeed = speed;
+	motorSpeed.rightSpeed = speed;
+
+	if (speed > 0)
+	{
+		switch (x_axis)
+		{
+		case 0x01:
+			motorSpeed.leftSpeed -= 3 * modifier; // max 7500, start from 5500
+			break;
+		case 0x02:
+			motorSpeed.leftSpeed -= 2 * modifier;
+			break;
+		case 0x03:
+			motorSpeed.leftSpeed -= 1 * modifier;
+			break;
+		case 0x04:
+			break;
+		case 0x05:
+			motorSpeed.rightSpeed -= 1 * modifier; 
+			break;
+		case 0x06:
+			motorSpeed.rightSpeed -= 2 * modifier;
+			break;
+		case 0x07:
+			motorSpeed.rightSpeed -= 3 * modifier;
+			break;
+		}
+	}
+	else if (speed < 0)
+	{
+		switch (x_axis)
+		{
+		case 0x01:
+			motorSpeed.leftSpeed += 3 * modifier;
+			break;
+		case 0x02:
+			motorSpeed.leftSpeed += 2 * modifier;
+			break;
+		case 0x03:
+			motorSpeed.leftSpeed += 1 * modifier;
+			break;
+		case 0x04:
+			break;
+		case 0x05:
+			motorSpeed.rightSpeed += 1 * modifier;
+			break;
+		case 0x06:
+			motorSpeed.rightSpeed += 2 * modifier;
+			break;
+		case 0x07:
+			motorSpeed.rightSpeed += 3 * modifier;
+			break;
+		}
+	}
+	else
+	{
+		switch (x_axis)
+		{
+		case 0x01:
+			motorSpeed.leftSpeed -= 3 * 2500;
+			motorSpeed.rightSpeed += 3 * 2500;
+			break;
+		case 0x02:
+			motorSpeed.leftSpeed -= 2 * 2500;
+			motorSpeed.rightSpeed += 2 * 2500;
+			break;
+		case 0x03:
+			motorSpeed.leftSpeed -= 1 * 2500;
+			motorSpeed.rightSpeed += 1 * 2500;
+			break;
+		case 0x04:
+			break;
+		case 0x05:
+			motorSpeed.leftSpeed += 1 * 2500;
+			motorSpeed.rightSpeed -= 1 * 2500;
+			break;
+		case 0x06:
+			motorSpeed.leftSpeed += 2 * 2500;
+			motorSpeed.rightSpeed -= 2 * 2500;
+			break;
+		case 0x07:
+			motorSpeed.leftSpeed += 3 * 2500;
+			motorSpeed.rightSpeed -= 3 * 2500;
 			break;
 		}
 	}
