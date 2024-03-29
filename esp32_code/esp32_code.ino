@@ -5,8 +5,6 @@
 
 unsigned long lastTimeStamp = 0;
 
-int previousVal = 0;
-
 void notify()
 {
   char messageString[200];
@@ -115,12 +113,7 @@ void notify()
   }
 
   int combinedOutput = (buttonData << 6) | (xOutput << 3) | yOutput;
-  if (previousVal != combinedOutput)
-  {
-    previousVal = combinedOutput;
-    // Serial.print(combinedOutput);
-    Serial2.write(combinedOutput);
-  }
+  Serial2.write(combinedOutput);
 }
 
 void onConnect()
