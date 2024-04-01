@@ -11,3 +11,5 @@ typedef enum
 
 void initLEDs(void);
 void ledControl(color_t color, int turnOn, int position);
+void movingLEDThread(void *argument);
+void stationaryLEDThread(void *argument);

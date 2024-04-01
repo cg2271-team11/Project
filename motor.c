@@ -69,6 +69,14 @@ void stopMotor(void)
 	TPM2_C1V = 0; // RIGHT_BACK_W
 }
 
+// Sets everything to high so that it locks the motors
+void brake(void){
+    TPM1_C0V = 1000; // LEFT_FRONT_W
+    TPM1_C1V = 1000; // LEFT_BACK_W
+	TPM2_C0V = 1000; // RIGHT_FRONT_W
+	TPM2_C1V = 1000; // RIGHT_BACK_W
+}
+
 void moveAll(int16_t leftSpeed, int16_t rightSpeed)
 {
 	if (leftSpeed == 0)
@@ -283,7 +291,7 @@ struct MotorSpeed prototypeCalculateSpeed(uint8_t x_axis, uint8_t y_axis)
 		case 0x04:
 			break;
 		case 0x05:
-			motorSpeed.rightSpeed -= 1 * modifier; 
+			motorSpeed.rightSpeed -= 1 * modifier;
 			break;
 		case 0x06:
 			motorSpeed.rightSpeed -= 2 * modifier;

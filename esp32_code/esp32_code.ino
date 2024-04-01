@@ -48,6 +48,7 @@ void notify()
   // 1/7 fastest mode
 
   int buttonData = PS4.Circle();
+  int brakeButtonData = PS4.Square();
   int xData = PS4.LStickX();
   int yData = PS4.LStickY();
 
@@ -112,7 +113,7 @@ void notify()
     yOutput = 7;
   }
 
-  int combinedOutput = (buttonData << 6) | (xOutput << 3) | yOutput;
+  int combinedOutput = (brakeButtonData << 7)|(buttonData << 6) | (xOutput << 3) | yOutput;
   Serial2.write(combinedOutput);
 }
 

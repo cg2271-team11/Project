@@ -15,7 +15,8 @@ uint8_t UART2_Receive_Poll(void);
 // 1/7 fastest mode
 typedef struct
 {
-	uint8_t button;
+  uint8_t brake;
+  uint8_t button;
   uint8_t x_axis;
   uint8_t y_axis;
 }UartValues_t;

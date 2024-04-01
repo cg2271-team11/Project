@@ -30,7 +30,7 @@ void initUART2(uint32_t baud_rate)
 }
 
 // initialise rx_data to the stationary position so that LED state will be correct
-volatile uint8_t rx_data = (0x04 << 3) | (0x04); 
+volatile uint8_t rx_data = (0x04 << 3) | (0x04);
 bool isFirstData = true;
 
 void UART2_IRQHandler(void)
@@ -51,7 +51,8 @@ void UART2_IRQHandler(void)
 UartValues_t extractUartValues()
 {
   UartValues_t values;
-	values.button = (rx_data >> 6) & 0x01; // Extract button value
+  values.brake = (rx_data >> 7);          // Extract brake value
+  values.button = (rx_data >> 6) & 0x01; // Extract button value
   values.x_axis = (rx_data >> 3) & 0x07; // Extract x-axis value
   values.y_axis = rx_data & 0x07;        // Extract y-axis value
 

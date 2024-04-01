@@ -10,10 +10,7 @@ void initPWM(void);
 
 // Movements
 void stopMotor(void);
-void move(uint16_t speed);
-void reverse(uint16_t speed);
-void goLeft(uint16_t speed);
-void goRight(uint16_t speed);
+void brake(void);
 void moveAll(int16_t leftSpeed, int16_t rightSpeed);
 
 struct MotorSpeed
