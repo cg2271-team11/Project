@@ -79,10 +79,12 @@ void moveAll(int16_t leftSpeed, int16_t rightSpeed)
 	else if (leftSpeed > 0)
 	{
 		TPM1_C0V = leftSpeed;
+		TPM1_C1V = 0;
 	}
 	else
 	{
 		TPM1_C1V = -leftSpeed;
+		TPM1_C0V = 0;
 	}
 
 	if (rightSpeed == 0)
@@ -93,10 +95,12 @@ void moveAll(int16_t leftSpeed, int16_t rightSpeed)
 	else if (rightSpeed > 0)
 	{
 		TPM2_C0V = rightSpeed;
+		TPM2_C1V = 0;
 	}
 	else
 	{
 		TPM2_C1V = -rightSpeed;
+		TPM2_C0V = 0;
 	}
 }
 
